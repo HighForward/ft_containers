@@ -1,0 +1,1 @@
+/usr/bin/c++   -std=c++98 -g  -rdynamic CMakeFiles/module.dir/main.cpp.o  -o module 

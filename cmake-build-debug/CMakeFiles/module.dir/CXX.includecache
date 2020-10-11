@@ -1,0 +1,26 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/user42/Bureau/projects/containers/main.cpp
+vector.hpp
+/home/user42/Bureau/projects/containers/vector.hpp
+iostream
+-
+vector
+-
+
+/home/user42/Bureau/projects/containers/vector.hpp
+iostream
+-
+memory
+-
+cstdio
+-
+cmath
+-
+
