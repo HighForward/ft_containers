@@ -13,6 +13,10 @@ iostream
 -
 vector
 -
+test.h
+/home/user42/Bureau/projects/containers/test.h
+
+/home/user42/Bureau/projects/containers/test.h
 
 /home/user42/Bureau/projects/containers/vector.hpp
 iostream
@@ -23,4 +27,16 @@ cstdio
 -
 cmath
 -
+exception
+-
+
+/home/user42/Bureau/projects/containers/vector_test.cpp
+vector.hpp
+/home/user42/Bureau/projects/containers/vector.hpp
+iostream
+-
+vector
+-
+test.h
+/home/user42/Bureau/projects/containers/test.h
 

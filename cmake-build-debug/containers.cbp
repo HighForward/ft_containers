@@ -90,6 +90,9 @@
 		<Unit filename="/home/user42/Bureau/projects/containers/vector.hpp">
 			<Option target="module"/>
 		</Unit>
+		<Unit filename="/home/user42/Bureau/projects/containers/vector_test.cpp">
+			<Option target="module"/>
+		</Unit>
 		<Unit filename="/home/user42/Bureau/projects/containers/CMakeLists.txt">
 			<Option virtualFolder="CMake Files\"/>
 		</Unit>

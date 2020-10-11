@@ -5,6 +5,7 @@
 #include <memory>
 #include <cstdio>
 #include <cmath>
+#include <exception>
 
 namespace ft
 {
@@ -65,6 +66,11 @@ namespace ft
 				return (vectorIterator<T>(this->c + n));
 			}
 
+			bool operator<(const vectorIterator &rhs)
+			{
+				return (c < rhs.c);
+			}
+
 			T &operator*()
 			{
 				return (*c);
@@ -90,46 +96,16 @@ namespace ft
 			size_type _capacity;
 			allocator_type allocator;
 
-		public:
+		private :
 
-			//Iterator:
-			iterator begin()
+		class out_of_range : public std::exception
+		{
+			virtual const char* what() const throw()
 			{
-				return (iterator(&at(0)));
+				return ("out_of_range");
 			}
+		};
 
-			iterator end()
-			{
-				return (iterator(&_c[_length]));
-			}
-
-			//TODO : const && reverse
-//			iterator begin()
-//			{
-//				return (iterator(&at(0)));
-//			}
-//
-//			iterator end()
-//			{
-//				return (iterator(&_c[_length]));
-//			}
-
-			//Capacity:
-			size_type size() const
-			{
-				return (_length);
-			}
-
-			size_type max_size() const
-			{
-//				return ((2 ^ 64) / sizeof(value_type) - 1);
-				return (0);
-			}
-
-
-
-
-			//return power of 2, new capacity
 			size_type get_new_capacity(size_type requested_capacity)
 			{
 				size_type new_cap = 0;
@@ -139,30 +115,9 @@ namespace ft
 				return (new_cap);
 			}
 
-			//return current allocate memory size
-			size_type capacity() const
-			{
-				return (_capacity);
-			}
-			
-			//reserve memory if capacity < n
-			void reserve(size_type n)
-			{
-					if (n > capacity())
-					{
-						T* new_c;
-						new_c = allocator.allocate(n);
-						for (size_type i = 0; i < _length; i++)
-						{
-							allocator.construct(&new_c[i], _c[i]);
-							allocator.destroy(&_c[i]);
-						}
-						allocator.deallocate(_c, capacity());
-						_capacity = n;
-						_c = new_c;
-					}
-			}
+		public:
 
+			//constructor - destructor
 			vector(const allocator_type& alloc = allocator_type())
 			{
 				allocator = alloc;
@@ -186,6 +141,76 @@ namespace ft
 				allocator.deallocate(_c, capacity());
 			}
 
+			// --- Iterator ---:
+			iterator begin()
+			{
+				return (iterator(&at(0)));
+			}
+
+			iterator end()
+			{
+				return (iterator(&_c[_length]));
+			}
+
+			//TODO : const && reverse
+//			iterator begin()
+//			{
+//				return (iterator(&at(0)));
+//			}
+//
+//			iterator end()
+//			{
+//				return (iterator(&_c[_length]));
+//			}
+
+
+			// --- Capacity ---:
+			size_type size() const
+			{
+				return (_length);
+			}
+
+			/* max_size */
+			/* resize */
+
+			size_type capacity() const
+			{
+				return (_capacity);
+			}
+
+			bool empty() const
+			{
+				return (_length == 0);
+			}
+
+			void reserve(size_type n)
+			{
+				if (n > capacity())
+				{
+					T* new_c;
+					new_c = allocator.allocate(n);
+					for (size_type i = 0; i < _length; i++)
+					{
+						allocator.construct(&new_c[i], _c[i]);
+						allocator.destroy(&_c[i]);
+					}
+					allocator.deallocate(_c, capacity());
+					_capacity = n;
+					_c = new_c;
+				}
+			}
+
+
+			// --- Element access ---:
+			reference operator[] (size_type n)
+			{
+				return (_c[n]);
+			}
+
+			const_reference operator[] (size_type n) const
+			{
+				return (_c[n]);
+			}
 
 			reference at(size_type n)
 			{
@@ -194,6 +219,8 @@ namespace ft
 
 			const_reference at(size_type n) const
 			{
+				if (n >= _length|| n < 0)
+					throw (vector::out_of_range());
 				return (_c[n]);
 			}
 
@@ -202,15 +229,77 @@ namespace ft
 				return (at(0));
 			}
 
-			bool empty() const
+			const_reference front() const
 			{
-				return (_length == 0);
+				return (at(0));
+			}
+
+			reference back()
+			{
+				return (at(_length - 1));
+			}
+
+			const_reference back() const
+			{
+				return (at(_length - 1));
+			}
+
+			// --- Modifiers ---:
+			void assign(iterator first, iterator last)
+			{
+//				clear();
+				last--;
+				std::cout << *first << " " << *last  << std::endl;
+//				_c = c_new;
 			}
 
 			void push_back(const value_type &val)
 			{
 				reserve(get_new_capacity(_length + 1));
 				_c[_length++] = val;
+			}
+
+			void pop_back()
+			{
+				allocator.destroy(&_c[--_length]);
+			}
+
+			iterator insert(iterator position, const value_type& val)
+			{
+				std::ptrdiff_t i = position - begin();
+
+				insert(position, 1, val);
+				return (iterator(&at(i)));
+			}
+
+			void insert(iterator position, size_type n ,const value_type& val)
+			{
+				if (n > 0)
+				{
+					value_type temp[_length + n];
+					std::ptrdiff_t index = position - begin();
+					reserve(get_new_capacity(_length + n));
+					for (size_type x = 0; x < index; x++)
+						temp[x] = _c[x];
+					for (size_type x = index; x < size(); ++x)
+						temp[x + n] = _c[x];
+					for (size_type i = 0; i < n; i++)
+						temp[i + index] = val;
+					for (size_type i = 0; i < _length + n; i++)
+						_c[i] = temp[i];
+					_length += n;
+				}
+			}
+
+			void insert(iterator position, iterator first, iterator last)
+			{
+				iterator it = position;
+				while (first != last)
+				{
+					it = insert(it, *first);
+					it++;
+					first++;
+				}
 			}
 
 			iterator erase(iterator position)
@@ -240,14 +329,6 @@ namespace ft
 			void clear()
 			{
 				erase(begin(), end());
-			}
-
-			void assign(iterator first, iterator last)
-			{
-//				clear();
-				last--;
-				std::cout << *first << " " << *last  << std::endl;
-//				_c = c_new;
 			}
 
 

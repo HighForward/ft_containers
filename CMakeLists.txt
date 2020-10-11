@@ -6,4 +6,4 @@ set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++98")
 
 file(GLOB containers)
 
-add_executable(module ${containers} main.cpp vector.hpp)
+add_executable(module ${containers} main.cpp vector_test.cpp vector.hpp)
