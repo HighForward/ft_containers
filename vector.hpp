@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <memory>
+#include <limits>
 #include <cstdio>
 #include <cmath>
 #include <exception>
@@ -18,6 +19,8 @@ namespace ft
 		public:
 			vectorIterator(){};
 			vectorIterator(T* current) { c = current; };
+			vectorIterator(const vectorIterator &x) { c = x.c; };
+
 			vectorIterator<T> operator++()
 			{
 				c++;
@@ -77,6 +80,8 @@ namespace ft
 			}
 	};
 
+
+
 	template<class T, class Alloc = std::allocator<T> >
 	class vector
 	{
@@ -88,6 +93,7 @@ namespace ft
 			typedef value_type* pointer;
 			typedef const value_type* const_pointer;
 			typedef vectorIterator<T> iterator;
+			typedef vectorIterator<const T> const_iterator;
 			typedef size_t size_type;
 
 		private:
@@ -108,12 +114,16 @@ namespace ft
 
 			size_type get_new_capacity(size_type requested_capacity)
 			{
+				if ((int)requested_capacity < 0)
+					return (0);
 				size_type new_cap = 0;
 				size_type power = 0;
 				while (new_cap < requested_capacity)
 					new_cap = pow(2, power++);
 				return (new_cap);
 			}
+
+
 
 		public:
 
@@ -136,10 +146,28 @@ namespace ft
 				_length = n;
 			};
 
+			vector(const vector& x)
+			{
+				_c = NULL;
+				_length = 0;
+				_capacity = 0;
+				assign(x.begin(), x.end());
+			}
+
+			vector(iterator first, iterator last, const allocator_type& alloc = allocator_type())
+			{
+				_c = NULL;
+				_length = 0;
+				_capacity = 0;
+				assign(first, last);
+			}
+
 			~vector()
 			{
 				allocator.deallocate(_c, capacity());
 			}
+
+
 
 			// --- Iterator ---:
 			iterator begin()
@@ -152,16 +180,16 @@ namespace ft
 				return (iterator(&_c[_length]));
 			}
 
-			//TODO : const && reverse
-//			iterator begin()
-//			{
-//				return (iterator(&at(0)));
-//			}
-//
-//			iterator end()
-//			{
-//				return (iterator(&_c[_length]));
-//			}
+			const_iterator begin() const
+			{
+				return (const_iterator(&at(0)));
+			}
+
+			const_iterator end() const
+			{
+				return (const_iterator(&_c[_length]));
+			}
+
 
 
 			// --- Capacity ---:
@@ -170,8 +198,22 @@ namespace ft
 				return (_length);
 			}
 
-			/* max_size */
-			/* resize */
+			size_type max_size() const
+			{
+				return (std::numeric_limits<size_type>::max() / sizeof(value_type));
+			}
+
+			void resize(size_type n, value_type val = value_type())
+			{
+				if (n > size())
+				{
+					if (n > capacity())
+						reserve(get_new_capacity(n + 1));
+					for (size_type x = size(); x < n; x++)
+						_c[x] = val;
+				}
+				_length = n;
+			}
 
 			size_type capacity() const
 			{
@@ -199,6 +241,8 @@ namespace ft
 					_c = new_c;
 				}
 			}
+
+
 
 
 			// --- Element access ---:
@@ -244,13 +288,41 @@ namespace ft
 				return (at(_length - 1));
 			}
 
+
+
+
 			// --- Modifiers ---:
 			void assign(iterator first, iterator last)
 			{
-//				clear();
-				last--;
-				std::cout << *first << " " << *last  << std::endl;
-//				_c = c_new;
+				std::ptrdiff_t len = last - first;
+				size_type x = 0;
+
+				if (len > capacity())
+					reserve(len);
+				for (iterator it = first; it != last; it++)
+					_c[x++] = *it;
+				_length = x;
+			}
+
+			void assign(const_iterator first, const_iterator last)
+			{
+				std::ptrdiff_t len = last - first;
+				size_type x = 0;
+
+				if (len > capacity())
+					reserve(len);
+				for (const_iterator it = first; it != last; it++)
+					_c[x++] = *it;
+				_length = x;
+			}
+
+			void assign(size_type n, const value_type &val)
+			{
+				if (n > capacity())
+					reserve(n);
+				for (size_type x = 0; x < n; x++)
+					_c[x] = val;
+				_length = n;
 			}
 
 			void push_back(const value_type &val)
@@ -306,32 +378,40 @@ namespace ft
 			{
 				std::ptrdiff_t index = position - begin();
 
-				while (index < _length - 1)
-				{
-					_c[index] = _c[index + 1];
-					index++;
-				}
+				for (size_type x = index; x != size() - 1; x++)
+					_c[x] = _c[x + 1];
 				_length--;
-				return (position);
+				return (iterator(&_c[index]));
 			}
 
 			iterator erase(iterator first, iterator last)
 			{
-				std::ptrdiff_t remove = last - first - 1;
 				std::ptrdiff_t index = first - begin();
+				std::ptrdiff_t stop = last - first;
 
-				for (size_type i = 0; i < remove; i++)
-					_c[index + i] = _c[index + i + remove];
-				_length -= remove;
-				return (begin() + index);
+				_length -= stop;
+				for (size_type i = index; i != size(); i++)
+					_c[i] = _c[i + stop];
+				return (iterator(&_c[index]));
+			}
+
+			void swap(vector &x)
+			{
+				size_type temp_len = _length;
+				size_type temp_cap = _capacity;
+				pointer temp_c = _c;
+				_length = x._length;
+				_capacity = x._capacity;
+				_c = x._c;
+				x._length = temp_len;
+				x._capacity = temp_cap;
+				x._c = temp_c;
 			}
 
 			void clear()
 			{
 				erase(begin(), end());
 			}
-
-
 	};
 }
 

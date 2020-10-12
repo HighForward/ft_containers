@@ -3,36 +3,32 @@
 #include <vector>
 #include "test.h"
 
-void	print_vector(ft::vector<int>::iterator it, ft::vector<int>::iterator ite)
-{
-	while (it != ite)
-	{
-		std::cout << *it << std::endl;
-		it++;
-	}
-}
-
-void	print_vector(std::vector<int>::iterator it, std::vector<int>::iterator ite)
-{
-	while (it != ite)
-	{
-		std::cout << *it << std::endl;
-		it++;
-	}
-}
-
 int main()
 {
-//	ft_vector_insert();
-//	std_vector_insert();
-
-	std::cout << "ft::vector\n"
+	std::cout << "\033[1;32mft::vector\033[0m\n";
 	{
-		ft::vector<int> vec;
-	}
-	std::cout << "std::vector\n"
-	{
-		ft::vector<int> vec;
-	}
+		ft::vector<int> vec(8, 666);
+		ft::vector<int> vec2(vec);
 
+//		vec.swap(vec2);
+		print_info(vec2);
+		print_vector(vec2.begin(), vec2.end());
+		print_capacity(vec2.begin(), vec2.capacity());
+//		print_info(vec2);
+//		print_vector(vec2.begin(), vec2.end());
+//		print_capacity(vec2.begin(), vec2.capacity());
+	}
+	std::cout << "\033[1;32mstd::vector\033[0m\n";
+	{
+		std::vector<int> vec(8, 666);
+		std::vector<int> vec2(vec);
+
+//		vec.swap(vec2);
+		print_info(vec2);
+		print_vector(vec2.begin(), vec2.end());
+		print_capacity(vec2.begin(), vec2.capacity());
+//		print_info(vec2);
+//		print_vector(vec2.begin(), vec2.end());
+//		print_capacity(vec2.begin(), vec2.capacity());
+	}
 }
