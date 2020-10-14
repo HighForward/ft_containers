@@ -84,13 +84,19 @@
 				</MakeCommands>
 			</Target>
 		</Build>
-		<Unit filename="/home/user42/Bureau/projects/containers/main.cpp">
+		<Unit filename="/home/user42/Bureau/projects/containers/list/list.hpp">
 			<Option target="module"/>
 		</Unit>
-		<Unit filename="/home/user42/Bureau/projects/containers/vector.hpp">
+		<Unit filename="/home/user42/Bureau/projects/containers/list/main.cpp">
 			<Option target="module"/>
 		</Unit>
-		<Unit filename="/home/user42/Bureau/projects/containers/vector_test.cpp">
+		<Unit filename="/home/user42/Bureau/projects/containers/vector/main.cpp">
+			<Option target="module"/>
+		</Unit>
+		<Unit filename="/home/user42/Bureau/projects/containers/vector/vector.hpp">
+			<Option target="module"/>
+		</Unit>
+		<Unit filename="/home/user42/Bureau/projects/containers/vector/vector_test.cpp">
 			<Option target="module"/>
 		</Unit>
 		<Unit filename="/home/user42/Bureau/projects/containers/CMakeLists.txt">
