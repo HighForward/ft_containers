@@ -4,53 +4,74 @@
 int main()
 {
 
-	std::cout << "\033[1;32mft::list\033[0m\n";
+	std::cout << "\033[1;32m-- ft::list --\033[0m\n";
 	{
 		ft::list<std::string> list;
 		ft::list<std::string>::iterator it;
 		ft::list<std::string>::iterator ite;
 
+//		list.push_front("fuckers");
+//		list.push_front("fdp");
+//		list.push_back("cc");
+//		list.push_back("yo");
+//		list.push_back("tg");
+//
+//		list.pop_front();
+//		list.pop_back();
 
-		list.push_back("cc");
-		list.push_back("yo");
+//		it = list.end();
+//		it++;
+//		it--;
+//		it--;
+//		std::cout << *it << std::endl;
 
-		list.pop_front();
-		list.pop_back();
-
-		list.push_back("lol");
+//		list.insert(it, "what the fuck");
+//		list.erase(it);
 
 		it = list.begin();
 		ite = list.end();
 
-		std::cout << list.size() << std::endl;
-
+		std::cout << "\033[1;31msize:\033[0m\n" << list.size() << std::endl;
+		std::cout << "\033[1;31mcontent:\033[0m\n";
 		while (it != ite)
 		{
 			std::cout << *it++ << std::endl;
 		}
+		std::cout << std::endl;
 	}
-	std::cout << "\033[1;32mstd::list\033[0m\n";
+	std::cout << "\033[1;32m-- std::list --\033[0m\n";
 	{
 		std::list<std::string> list;
-		std::list<std::string>::const_iterator it;
-		std::list<std::string>::const_iterator ite;
+		std::list<std::string>::iterator it;
+		std::list<std::string>::iterator ite;
 
-		list.push_back("cc");
-		list.push_back("yo");
+//		list.push_front("fuckers");
+//		list.push_front("fdp");
+//		list.push_back("cc");
+//		list.push_back("yo");
+//		list.push_back("tg");
+//
+//		list.pop_front();
+//		list.pop_back();
 
-		list.pop_front();
-		list.pop_back();
+//		it = list.end();
+//		it++;
+//		it--;
+//		it--;
+//		std::cout << *it << std::endl;
 
-		list.push_back("lol");
+//		list.insert(it, "what the fuck");
+//		list.erase(it);
 
 		it = list.begin();
 		ite = list.end();
 
-		std::cout << list.size() << std::endl;
-
+		std::cout << "\033[1;31msize:\033[0m\n" << list.size() << std::endl;
+		std::cout << "\033[1;31mcontent:\033[0m\n";
 		while (it != ite)
 		{
 			std::cout << *it++ << std::endl;
 		}
+		std::cout << std::endl;
 	}
 }

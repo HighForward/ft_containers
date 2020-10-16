@@ -3,7 +3,6 @@
 
 namespace ft
 {
-
 	template<typename T>
 	class Node
 	{
@@ -29,6 +28,11 @@ namespace ft
 			listIterator(listIterator const *copy) : n(copy->n) {}
 			~listIterator() {}
 
+			Node<T>* get_node()
+			{
+				return (n);
+			}
+
 			listIterator& operator++()
 			{
 				n = n->next;
@@ -39,7 +43,7 @@ namespace ft
 			{
 				Node<T>* temp = n;
 				n = n->next;
-				return (temp);
+				return (listIterator<T>(temp));
 			}
 
 			listIterator& operator--()
@@ -52,7 +56,12 @@ namespace ft
 			{
 				Node<T>* temp = n;
 				n = n->prev;
-				return (temp);
+				return (listIterator<T>(temp));
+			}
+
+			bool operator==(listIterator<T> const &rhs)
+			{
+				return (this->n == rhs.n);
 			}
 
 			bool operator!=(listIterator<T> const &rhs)
@@ -89,6 +98,7 @@ namespace ft
 			{
 				Node<T> *first;
 				Node<T> *last;
+				Node<T> *past_end;
 			}				t_list;
 
 			t_list _list;
@@ -97,8 +107,18 @@ namespace ft
 
 			void init()
 			{
-				_list.last = NULL;
-				_list.first = NULL;
+				_list.past_end = new Node<T>;
+				_list.last = _list.past_end;
+				_list.first = _list.past_end;
+				init_past_end();
+			}
+
+			void init_past_end()
+			{
+				_list.past_end->next = _list.first;
+				_list.past_end->prev = _list.last;
+				_list.last->next = _list.past_end;
+				_list.first->prev = _list.past_end;
 			}
 
 		public:
@@ -123,13 +143,13 @@ namespace ft
 				Node<T> *tmp;
 
 				remove = _list.first;
-				while (remove != NULL)
+				while (remove != end().get_node())
 				{
 					tmp = remove->next;
 					delete remove;
 					remove = tmp;
 				}
-				init();
+				delete _list.past_end;
 			}
 
 			//Iterator
@@ -188,14 +208,15 @@ namespace ft
 			void push_back(const value_type &val)
 			{
 				Node<T> *node = new Node<T>(val);
-				node->next = NULL;
+				node->next = _list.past_end;
 				node->prev = _list.last;
 
-				if (_list.last != NULL)
+				if (size() != 0)
 					_list.last->next = node;
 				else
 					_list.first = node;
 				_list.last = node;
+				init_past_end();
 				_length++;
 			}
 
@@ -203,13 +224,14 @@ namespace ft
 			{
 				Node<T> *node = new Node<T>(val);
 				node->next = _list.first;
-				node->prev = NULL;
+				node->prev = _list.past_end;
 
-				if (_list.first != NULL)
+				if (size() != 0)
 					_list.first->prev = node;
 				else
 					_list.last = node;
 				_list.first = node;
+				init_past_end();
 				_length++;
 			}
 
@@ -217,6 +239,7 @@ namespace ft
 			{
 				Node<T> *tmp = _list.last->prev;
 				delete _list.last;
+				_list.last->next = NULL;
 				_list.last = tmp;
 				_length--;
 			}
@@ -225,10 +248,70 @@ namespace ft
 			{
 				Node<T> *tmp = _list.first->next;
 				delete _list.first;
+				tmp->prev = NULL;
 				_list.first = tmp;
 				_length--;
 			}
 
+			iterator insert(iterator position, const value_type& val)
+			{
+				if (position == begin())
+				{
+					push_front(val);
+					return (begin());
+				}
+				else if (position == end())
+				{
+					push_back(val);
+					return (end());
+				}
+				else
+				{
+					Node<T> *node = new Node<T>(val);
+					node->prev = position.get_node()->prev;
+					node->next = position.get_node();
+					position.get_node()->prev->next = node;
+					position.get_node()->prev = node;
+					_length++;
+					return (iterator(node));
+				}
+			}
+
+			void insert(iterator position, size_type n, const value_type& val)
+			{
+				iterator tmp = position;
+				for (size_type x = 0; x < n; x++)
+					insert(tmp, val);
+			}
+
+			void insert(iterator position, iterator first, iterator last)
+			{
+				for (iterator it = position; it != last; it++)
+					insert(position, *it);
+			}
+
+			iterator erase(iterator position)
+			{
+//				if (position == begin())
+//				{
+//					pop_front();
+//					return (begin());
+//				}
+//				else if (--position == end())
+//				{
+//					pop_back();
+//					return (end());
+//				}
+//				else
+//				{
+//					Node<T> *tmp = position.get_node()->prev;
+//					tmp->next = position.get_node()->next;
+//					position.get_node()->next->prev = tmp;
+//					delete position.get_node();
+//					_length--;
+//					return (position);
+//				}
+			}
 
 	};
 }
