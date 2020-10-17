@@ -239,18 +239,20 @@ namespace ft
 			{
 				Node<T> *tmp = _list.last->prev;
 				delete _list.last;
-				_list.last->next = NULL;
 				_list.last = tmp;
-				_length--;
+                init_past_end();
+
+                _length--;
 			}
 
 			void pop_front()
 			{
 				Node<T> *tmp = _list.first->next;
 				delete _list.first;
-				tmp->prev = NULL;
 				_list.first = tmp;
-				_length--;
+                init_past_end();
+
+                _length--;
 			}
 
 			iterator insert(iterator position, const value_type& val)
@@ -292,26 +294,48 @@ namespace ft
 
 			iterator erase(iterator position)
 			{
-//				if (position == begin())
-//				{
-//					pop_front();
-//					return (begin());
-//				}
-//				else if (--position == end())
-//				{
-//					pop_back();
-//					return (end());
-//				}
-//				else
-//				{
-//					Node<T> *tmp = position.get_node()->prev;
-//					tmp->next = position.get_node()->next;
-//					position.get_node()->next->prev = tmp;
-//					delete position.get_node();
-//					_length--;
-//					return (position);
-//				}
+				if (position == begin())
+				{
+                    pop_front();
+                    return (begin());
+                }
+				else if (position == --end())
+				{
+                    pop_back();
+                    return (end());
+                }
+				else if (position == end())
+                    return (position);
+				else
+				{
+                    Node<T> *tmp = position.get_node()->prev;
+                    tmp->next = position.get_node()->next;
+					position.get_node()->next->prev = tmp;
+					delete position.get_node();
+					_length--;
+					return (iterator(tmp->next));
+				}
 			}
+
+			iterator erase(iterator first, iterator last)
+            {
+			    while  (first != last)
+			        erase(first++);
+			    return (last);
+            }
+
+            void resize(size_type n, value_type val = value_type())
+            {
+			        for (size_type x = _length; x > n; x--)
+                        pop_back();
+			        for (size_type x = _length; x < n; x++)
+			            push_back(val);
+            }
+
+            void clear()
+            {
+			    erase(begin(), end());
+            }
 
 	};
 }
