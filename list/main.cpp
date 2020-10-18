@@ -11,27 +11,14 @@ int main()
 		ft::list<std::string>::iterator ite;
 
         list.push_front("fuckers");
-		list.push_back("fdp");
-		list.push_back("cc");
-		list.push_back("yo");
-		list.push_back("tg");
-//
-//		list.pop_front();
-//		list.pop_back();
+        list.push_back("fdp");
+        list.push_back("cc");
+        list.push_back("yo");
+        list.push_back("tg");
 
-        ite = list.end();
-//        ite--;
-//        ite--;
-        it = list.begin();
-//        it++;
-//		it--;
-//		it--;
-//		it--;
-//		it--;
+        ft::list<std::string> test(5, "gang");
 
-//        std::cout << *list.erase(it, ite) << std::endl;
-        list.resize(6, "PUTE");
-        list.clear();
+        list.swap(test);
 
         it = list.begin();
         ite = list.end();
@@ -42,7 +29,16 @@ int main()
         {
             std::cout << *it++ << std::endl;
         }
-		std::cout << std::endl;
+
+        std::cout << "\033[1;31msize:\033[0m\n" << list.size() << std::endl;
+        std::cout << "\033[1;31mcontent:\033[0m\n";
+        it = test.begin();
+        ite = test.end();
+        while (it != ite)
+        {
+            std::cout << *it++ << std::endl;
+        }
+        std::cout << std::endl;
 	}
 	std::cout << "\033[1;32m-- std::list --\033[0m\n";
 	{
@@ -56,24 +52,10 @@ int main()
         list.push_back("cc");
         list.push_back("yo");
         list.push_back("tg");
-//
-//		list.pop_front();
-//		list.pop_back();
 
-        ite = list.end();
-//        ite--;
-//        ite--;
-        it = list.begin();
-//        it++;
-//		it--;
-//		it--;
-//		it--;
-//		it--;
+        std::list<std::string> test(5, "gang");
 
-//        std::cout << *list.erase(it, ite) << std::endl;
-
-        list.resize(6, "PUTE");
-        list.clear();
+        list.swap(test);
 
         it = list.begin();
         ite = list.end();
@@ -84,6 +66,15 @@ int main()
         {
             std::cout << *it++ << std::endl;
         }
-		std::cout << std::endl;
+
+        std::cout << "\033[1;31msize:\033[0m\n" << list.size() << std::endl;
+        std::cout << "\033[1;31mcontent:\033[0m\n";
+        it = test.begin();
+        ite = test.end();
+        while (it != ite)
+        {
+            std::cout << *it++ << std::endl;
+        }
+        std::cout << std::endl;
 	}
 }

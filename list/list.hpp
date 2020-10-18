@@ -105,6 +105,14 @@ namespace ft
 			allocator_type _allocator;
 			size_type _length;
 
+            template<typename Type>
+            void swap(Type &l, Type &r)
+            {
+                Type tmp(l);
+                l = r;
+                r = tmp;
+            }
+
 			void init()
 			{
 				_list.past_end = new Node<T>;
@@ -133,8 +141,10 @@ namespace ft
 			list(size_type n, const value_type &val = value_type(), const allocator_type &alloc = allocator_type())
 			{
 				_allocator = alloc;
-				_length = n;
-				init();
+				_length = 0;
+                init();
+				for (size_type x = n; x != 0; x--)
+				    push_back(val);
 			}
 
 			~list()
@@ -152,6 +162,8 @@ namespace ft
 				delete _list.past_end;
 			}
 
+			//operator=
+
 			//Iterator
 			iterator begin()
 			{
@@ -165,6 +177,8 @@ namespace ft
 				else
 					return (iterator(_list.last->next));
 			}
+
+			//reverse et const
 
 			//Capacity
 			bool empty() const
@@ -205,6 +219,22 @@ namespace ft
 			}
 
 			//Modifiers
+            void assign(iterator first, iterator last)
+            {
+                list<T> tmp;
+
+                tmp.insert(tmp.begin(), first, last);
+                clear();
+                insert(begin(), tmp.begin(), tmp.end());
+            }
+
+            void assign(size_type n, const value_type& val)
+            {
+                clear();
+                for (size_type x = n; x > 0; x--)
+                    push_back(val);
+            }
+
 			void push_back(const value_type &val)
 			{
 				Node<T> *node = new Node<T>(val);
@@ -288,8 +318,9 @@ namespace ft
 
 			void insert(iterator position, iterator first, iterator last)
 			{
-				for (iterator it = position; it != last; it++)
-					insert(position, *it);
+
+                for (iterator it = first; it != last; it++)
+                    insert(position, *it);
 			}
 
 			iterator erase(iterator position)
@@ -324,6 +355,8 @@ namespace ft
 			    return (last);
             }
 
+            //swap
+
             void resize(size_type n, value_type val = value_type())
             {
 			        for (size_type x = _length; x > n; x--)
@@ -337,5 +370,15 @@ namespace ft
 			    erase(begin(), end());
             }
 
+            void swap (list<T> &x)
+            {
+			    list<T> tmp;
+
+			    tmp.assign(x.begin(), x.end());
+			    x.assign(begin(), end());
+			    assign(tmp.begin(), tmp.end());
+            }
+
+            //Operations
 	};
 }
