@@ -6,23 +6,30 @@ int main()
 
 	std::cout << "\033[1;32m-- ft::list --\033[0m\n";
 	{
-		ft::list<std::string> list;
-		ft::list<std::string>::iterator it;
-		ft::list<std::string>::iterator ite;
+		ft::list<int> list;
+		ft::list<int>::iterator it;
+		ft::list<int>::iterator ite;
 
-        list.push_front("fuckers");
-        list.push_back("fdp");
-        list.push_back("cc");
-        list.push_back("yo");
-        list.push_back("tg");
+        list.push_front(42);
+        list.push_back(99);
+        list.push_back(53);
+        list.push_back(66);
+        list.push_back(12);
+        list.push_back(33);
+        list.push_back(150);
 
-        ft::list<std::string> test(5, "gang");
+        ft::list<std::string> test;
 
-        list.swap(test);
 
+//        it++;
+//        it++;
+
+//        list.splice(it, test);
+
+        list.sort();
+        list.reverse();
         it = list.begin();
         ite = list.end();
-
         std::cout << "\033[1;31msize:\033[0m\n" << list.size() << std::endl;
         std::cout << "\033[1;31mcontent:\033[0m\n";
         while (it != ite)
@@ -30,33 +37,40 @@ int main()
             std::cout << *it++ << std::endl;
         }
 
-        std::cout << "\033[1;31msize:\033[0m\n" << list.size() << std::endl;
-        std::cout << "\033[1;31mcontent:\033[0m\n";
-        it = test.begin();
-        ite = test.end();
-        while (it != ite)
-        {
-            std::cout << *it++ << std::endl;
-        }
+//        std::cout << "\033[1;31msize:\033[0m\n" << list.size() << std::endl;
+//        std::cout << "\033[1;31mcontent:\033[0m\n";
+//        it = test.begin();
+//        ite = test.end();
+//        while (it != ite)
+//        {
+//            std::cout << *it++ << std::endl;
+//        }
         std::cout << std::endl;
 	}
 	std::cout << "\033[1;32m-- std::list --\033[0m\n";
 	{
-		std::list<std::string> list;
-		std::list<std::string>::iterator it;
-		std::list<std::string>::iterator ite;
+		std::list<int> list;
+		std::list<int>::iterator it;
+		std::list<int>::iterator ite;
+
+        list.push_front(42);
+        list.push_back(99);
+        list.push_back(53);
+        list.push_back(66);
+        list.push_back(12);
+        list.push_back(33);
+        list.push_back(150);
+
+//        std::list<std::string> test(3, "gang");
 
 
-        list.push_front("fuckers");
-        list.push_back("fdp");
-        list.push_back("cc");
-        list.push_back("yo");
-        list.push_back("tg");
+//        it++;
+//        it++;
 
-        std::list<std::string> test(5, "gang");
+//        test.splice(test.begin(), list);
 
-        list.swap(test);
-
+        list.sort();
+        list.reverse();
         it = list.begin();
         ite = list.end();
 
@@ -67,14 +81,14 @@ int main()
             std::cout << *it++ << std::endl;
         }
 
-        std::cout << "\033[1;31msize:\033[0m\n" << list.size() << std::endl;
-        std::cout << "\033[1;31mcontent:\033[0m\n";
-        it = test.begin();
-        ite = test.end();
-        while (it != ite)
-        {
-            std::cout << *it++ << std::endl;
-        }
+//        std::cout << "\033[1;31msize:\033[0m\n" << list.size() << std::endl;
+//        std::cout << "\033[1;31mcontent:\033[0m\n";
+//        it = test.begin();
+//        ite = test.end();
+//        while (it != ite)
+//        {
+//            std::cout << *it++ << std::endl;
+//        }
         std::cout << std::endl;
 	}
 }

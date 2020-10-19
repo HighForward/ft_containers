@@ -170,60 +170,6 @@ list/main.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/module.dir/build.make CMakeFiles/module.dir/list/main.cpp.s
 .PHONY : list/main.cpp.s
 
-vector/main.o: vector/main.cpp.o
-
-.PHONY : vector/main.o
-
-# target to build an object file
-vector/main.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/module.dir/build.make CMakeFiles/module.dir/vector/main.cpp.o
-.PHONY : vector/main.cpp.o
-
-vector/main.i: vector/main.cpp.i
-
-.PHONY : vector/main.i
-
-# target to preprocess a source file
-vector/main.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/module.dir/build.make CMakeFiles/module.dir/vector/main.cpp.i
-.PHONY : vector/main.cpp.i
-
-vector/main.s: vector/main.cpp.s
-
-.PHONY : vector/main.s
-
-# target to generate assembly for a file
-vector/main.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/module.dir/build.make CMakeFiles/module.dir/vector/main.cpp.s
-.PHONY : vector/main.cpp.s
-
-vector/vector_test.o: vector/vector_test.cpp.o
-
-.PHONY : vector/vector_test.o
-
-# target to build an object file
-vector/vector_test.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/module.dir/build.make CMakeFiles/module.dir/vector/vector_test.cpp.o
-.PHONY : vector/vector_test.cpp.o
-
-vector/vector_test.i: vector/vector_test.cpp.i
-
-.PHONY : vector/vector_test.i
-
-# target to preprocess a source file
-vector/vector_test.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/module.dir/build.make CMakeFiles/module.dir/vector/vector_test.cpp.i
-.PHONY : vector/vector_test.cpp.i
-
-vector/vector_test.s: vector/vector_test.cpp.s
-
-.PHONY : vector/vector_test.s
-
-# target to generate assembly for a file
-vector/vector_test.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/module.dir/build.make CMakeFiles/module.dir/vector/vector_test.cpp.s
-.PHONY : vector/vector_test.cpp.s
-
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -236,12 +182,6 @@ help:
 	@echo "... list/main.o"
 	@echo "... list/main.i"
 	@echo "... list/main.s"
-	@echo "... vector/main.o"
-	@echo "... vector/main.i"
-	@echo "... vector/main.s"
-	@echo "... vector/vector_test.o"
-	@echo "... vector/vector_test.i"
-	@echo "... vector/vector_test.s"
 .PHONY : help
 
 

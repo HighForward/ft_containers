@@ -1,5 +1,6 @@
 #include <iostream>
 #include <cstddef>
+#include <algorithm>
 
 namespace ft
 {
@@ -13,6 +14,10 @@ namespace ft
 
 			Node() {}
 			Node(const T &content) : c(content), next(NULL), prev(NULL) {}
+			bool operator<(Node &rhs)
+            {
+			    return (c < rhs.c);
+            }
 	};
 
 	template<typename T>
@@ -69,6 +74,11 @@ namespace ft
 				return (this->n != rhs.n);
 			}
 
+            bool operator<(listIterator<T> const &rhs)
+            {
+                return (n->c < rhs.n->c);
+            }
+
 			T& operator*()
 			{
 				return (n->c);
@@ -111,6 +121,14 @@ namespace ft
                 Type tmp(l);
                 l = r;
                 r = tmp;
+            }
+
+            Node<T>* node_at(size_type index)
+            {
+                iterator it = begin();
+                for (size_type x = 0; x < index; x++)
+                    it++;
+                return (it.get_node());
             }
 
 			void init()
@@ -355,7 +373,10 @@ namespace ft
 			    return (last);
             }
 
-            //swap
+            void swap (list<T> &x)
+            {
+                swap(_list, x._list);
+            }
 
             void resize(size_type n, value_type val = value_type())
             {
@@ -370,15 +391,106 @@ namespace ft
 			    erase(begin(), end());
             }
 
-            void swap (list<T> &x)
+            //Operations
+            void splice(iterator position, list<T> &x)
             {
-			    list<T> tmp;
+//                Node<T> *tmp;
 
-			    tmp.assign(x.begin(), x.end());
-			    x.assign(begin(), end());
-			    assign(tmp.begin(), tmp.end());
+//                tmp = position.get_node()->prev;
             }
 
-            //Operations
+            void remove(const value_type& val)
+            {
+                for (iterator it = begin(); it != end(); it++)
+                {
+                    if (*it == val)
+                        erase(it);
+                }
+            }
+
+            template <class Predicate>
+            void remove_if(Predicate pred)
+            {
+                for (iterator it = begin(); it != end(); it++)
+                {
+                    if (pred(*it))
+                        erase(it);
+                }
+            }
+
+            void unique()
+            {
+                for (iterator it = begin(); it != end(); it++)
+                {
+                    for (iterator x = it; it != end(); it++)
+                    {
+                        if (*++x == *it)
+                            erase(++it);
+                    }
+                }
+            }
+
+            template <class BinaryPredicate>
+            void unique(BinaryPredicate binary_pred)
+            {
+                for (iterator it = begin(); it != end(); it++)
+                {
+                    it++;
+                    if (binary_pred(*it, *--it))
+                        erase(++it);
+                }
+            }
+
+            void sort()
+            {
+                Node<T> tmp;
+                iterator x = begin();
+                x++;
+                if (size() < 2)
+                    return ;
+                while (x != end())
+                {
+                    iterator y(x.get_node()->prev);
+                    if (x < y)
+                    {
+                        swap(*x, *y);
+                        x = begin();
+                    }
+                    x++;
+                }
+            }
+
+            template<class Compare>
+            void sort(Compare comp)
+            {
+                Node<T> tmp;
+                iterator x = begin();
+                x++;
+                if (size() < 2)
+                    return ;
+                while (x != end())
+                {
+                    iterator y(x.get_node()->prev);
+                    if (comp(*y, *x))
+                    {
+                        swap(*x, *y);
+                        x = begin();
+                    }
+                    x++;
+                }
+            }
+
+            void reverse()
+            {
+                if (size() < 2)
+                    return ;
+
+                for (size_type x = 0; x < (size() / 2); x++)
+                {
+                    value_type tmp = node_at(_length - x - 1)->c;
+                    node_at(_length - x - 1)->c = node_at(x)->c;
+                    node_at(x)->c = tmp;
+                }
+            }
 	};
 }

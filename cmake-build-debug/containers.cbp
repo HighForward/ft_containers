@@ -90,15 +90,6 @@
 		<Unit filename="/home/user42/Bureau/projects/ft_containers/list/main.cpp">
 			<Option target="module"/>
 		</Unit>
-		<Unit filename="/home/user42/Bureau/projects/ft_containers/vector/main.cpp">
-			<Option target="module"/>
-		</Unit>
-		<Unit filename="/home/user42/Bureau/projects/ft_containers/vector/vector.hpp">
-			<Option target="module"/>
-		</Unit>
-		<Unit filename="/home/user42/Bureau/projects/ft_containers/vector/vector_test.cpp">
-			<Option target="module"/>
-		</Unit>
 		<Unit filename="/home/user42/Bureau/projects/ft_containers/CMakeLists.txt">
 			<Option virtualFolder="CMake Files\"/>
 		</Unit>
