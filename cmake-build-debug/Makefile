@@ -143,32 +143,32 @@ module/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/module.dir/build.make CMakeFiles/module.dir/build
 .PHONY : module/fast
 
-list/main.o: list/main.cpp.o
+Queue/main.o: Queue/main.cpp.o
 
-.PHONY : list/main.o
+.PHONY : Queue/main.o
 
 # target to build an object file
-list/main.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/module.dir/build.make CMakeFiles/module.dir/list/main.cpp.o
-.PHONY : list/main.cpp.o
+Queue/main.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/module.dir/build.make CMakeFiles/module.dir/Queue/main.cpp.o
+.PHONY : Queue/main.cpp.o
 
-list/main.i: list/main.cpp.i
+Queue/main.i: Queue/main.cpp.i
 
-.PHONY : list/main.i
+.PHONY : Queue/main.i
 
 # target to preprocess a source file
-list/main.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/module.dir/build.make CMakeFiles/module.dir/list/main.cpp.i
-.PHONY : list/main.cpp.i
+Queue/main.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/module.dir/build.make CMakeFiles/module.dir/Queue/main.cpp.i
+.PHONY : Queue/main.cpp.i
 
-list/main.s: list/main.cpp.s
+Queue/main.s: Queue/main.cpp.s
 
-.PHONY : list/main.s
+.PHONY : Queue/main.s
 
 # target to generate assembly for a file
-list/main.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/module.dir/build.make CMakeFiles/module.dir/list/main.cpp.s
-.PHONY : list/main.cpp.s
+Queue/main.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/module.dir/build.make CMakeFiles/module.dir/Queue/main.cpp.s
+.PHONY : Queue/main.cpp.s
 
 # Help Target
 help:
@@ -179,9 +179,9 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... module"
-	@echo "... list/main.o"
-	@echo "... list/main.i"
-	@echo "... list/main.s"
+	@echo "... Queue/main.o"
+	@echo "... Queue/main.i"
+	@echo "... Queue/main.s"
 .PHONY : help
 
 

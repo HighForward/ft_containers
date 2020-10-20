@@ -77,27 +77,27 @@ include CMakeFiles/module.dir/progress.make
 # Include the compile flags for this target's objects.
 include CMakeFiles/module.dir/flags.make
 
-CMakeFiles/module.dir/list/main.cpp.o: CMakeFiles/module.dir/flags.make
-CMakeFiles/module.dir/list/main.cpp.o: ../list/main.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/user42/Bureau/projects/ft_containers/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/module.dir/list/main.cpp.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/module.dir/list/main.cpp.o -c /home/user42/Bureau/projects/ft_containers/list/main.cpp
+CMakeFiles/module.dir/Queue/main.cpp.o: CMakeFiles/module.dir/flags.make
+CMakeFiles/module.dir/Queue/main.cpp.o: ../Queue/main.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/user42/Bureau/projects/ft_containers/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/module.dir/Queue/main.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/module.dir/Queue/main.cpp.o -c /home/user42/Bureau/projects/ft_containers/Queue/main.cpp
 
-CMakeFiles/module.dir/list/main.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/module.dir/list/main.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/user42/Bureau/projects/ft_containers/list/main.cpp > CMakeFiles/module.dir/list/main.cpp.i
+CMakeFiles/module.dir/Queue/main.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/module.dir/Queue/main.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/user42/Bureau/projects/ft_containers/Queue/main.cpp > CMakeFiles/module.dir/Queue/main.cpp.i
 
-CMakeFiles/module.dir/list/main.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/module.dir/list/main.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/user42/Bureau/projects/ft_containers/list/main.cpp -o CMakeFiles/module.dir/list/main.cpp.s
+CMakeFiles/module.dir/Queue/main.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/module.dir/Queue/main.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/user42/Bureau/projects/ft_containers/Queue/main.cpp -o CMakeFiles/module.dir/Queue/main.cpp.s
 
 # Object files for target module
 module_OBJECTS = \
-"CMakeFiles/module.dir/list/main.cpp.o"
+"CMakeFiles/module.dir/Queue/main.cpp.o"
 
 # External object files for target module
 module_EXTERNAL_OBJECTS =
 
-module: CMakeFiles/module.dir/list/main.cpp.o
+module: CMakeFiles/module.dir/Queue/main.cpp.o
 module: CMakeFiles/module.dir/build.make
 module: CMakeFiles/module.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/user42/Bureau/projects/ft_containers/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable module"

@@ -84,10 +84,13 @@
 				</MakeCommands>
 			</Target>
 		</Build>
-		<Unit filename="/home/user42/Bureau/projects/ft_containers/list/list.hpp">
+		<Unit filename="/home/user42/Bureau/projects/ft_containers/List/List.hpp">
 			<Option target="module"/>
 		</Unit>
-		<Unit filename="/home/user42/Bureau/projects/ft_containers/list/main.cpp">
+		<Unit filename="/home/user42/Bureau/projects/ft_containers/Queue/Queue.hpp">
+			<Option target="module"/>
+		</Unit>
+		<Unit filename="/home/user42/Bureau/projects/ft_containers/Queue/main.cpp">
 			<Option target="module"/>
 		</Unit>
 		<Unit filename="/home/user42/Bureau/projects/ft_containers/CMakeLists.txt">
