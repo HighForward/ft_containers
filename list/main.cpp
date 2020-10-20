@@ -32,6 +32,14 @@ int main()
 
         test.push_back(43);
 
+
+        ft::list<int>::const_iterator c;
+
+        c = list.begin();
+
+//        *c = "15;"
+
+
         std::cout << "\033[1;31msize:\033[0m\n" << list.size() << std::endl;
         std::cout << "\033[1;31mcontent:\033[0m\n";
         it = list.begin();
@@ -79,6 +87,13 @@ int main()
         list.merge(test);
 
         test.push_back(43);
+
+        std::list<int>::const_iterator c;
+
+        c = list.begin();
+
+        c.operator*();
+
 
         std::cout << "\033[1;31msize:\033[0m\n" << list.size() << std::endl;
         std::cout << "\033[1;31mcontent:\033[0m\n";

@@ -79,11 +79,27 @@ namespace ft
                 return (n->c < rhs.n->c);
             }
 
-			T& operator*()
+            T& operator*()
 			{
 				return (n->c);
 			}
 	};
+
+    template<typename T>
+    class listConstIterator : public listIterator<T>
+    {
+        public:
+            listConstIterator() : listIterator<T>() {}
+            listConstIterator(const listConstIterator& i) : listIterator<T>(i) {}
+            listConstIterator(const listIterator<T>& i) : listIterator<T>(i) {}
+            virtual ~listConstIterator() {}
+
+            const T& operator *()
+            {
+                return (listIterator<T>::get_node()->c);
+            }
+
+    };
 
 	template<class T, class Alloc = std::allocator<T> >
 	class list
@@ -99,7 +115,7 @@ namespace ft
 			typedef std::ptrdiff_t difference_type;
 
 			typedef listIterator<T> iterator;
-			typedef listIterator<const T> const_iterator;
+			typedef listConstIterator<T> const_iterator;
 
 			typedef size_t size_type;
 
