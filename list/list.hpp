@@ -392,13 +392,6 @@ namespace ft
             }
 
             //Operations
-            void splice(iterator position, list<T> &x)
-            {
-//                Node<T> *tmp;
-
-//                tmp = position.get_node()->prev;
-            }
-
             void remove(const value_type& val)
             {
                 for (iterator it = begin(); it != end(); it++)
@@ -484,13 +477,49 @@ namespace ft
             {
                 if (size() < 2)
                     return ;
-
                 for (size_type x = 0; x < (size() / 2); x++)
                 {
                     value_type tmp = node_at(_length - x - 1)->c;
                     node_at(_length - x - 1)->c = node_at(x)->c;
                     node_at(x)->c = tmp;
                 }
+            }
+
+            void splice (iterator position, list& x)
+            {
+                insert(position, x.begin(), x.end());
+                x.clear();
+            }
+
+            void splice (iterator position, list& x, iterator i)
+            {
+                insert(position, *i);
+                x.erase(i);
+            }
+
+            void splice (iterator position, list& x, iterator first, iterator last)
+            {
+                insert(position, first, last);
+                x.erase(first, last);
+            }
+
+            void merge (list& x)
+            {
+                if (&x == this)
+                    return ;
+                insert(this->begin(), x.begin(), x.end());
+                sort();
+                x.clear();
+            }
+
+            template<class Compare>
+            void merge (list& x, Compare comp)
+            {
+                if (&x == this)
+                    return ;
+                insert(this->begin(), x.begin(), x.end());
+                sort(comp);
+                x.clear();
             }
 	};
 }

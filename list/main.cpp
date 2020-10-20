@@ -18,33 +18,38 @@ int main()
         list.push_back(33);
         list.push_back(150);
 
-        ft::list<std::string> test;
-
-
-//        it++;
-//        it++;
-
-//        list.splice(it, test);
+        ft::list<int> test;
+        test.push_back(1);
+        test.push_back(15);
+        test.push_back(2);
+        test.push_back(99);
+        test.push_back(3);
 
         list.sort();
-        list.reverse();
-        it = list.begin();
-        ite = list.end();
+        test.sort();
+
+        list.merge(test);
+
+        test.push_back(43);
+
         std::cout << "\033[1;31msize:\033[0m\n" << list.size() << std::endl;
         std::cout << "\033[1;31mcontent:\033[0m\n";
+        it = list.begin();
+        ite = list.end();
         while (it != ite)
         {
             std::cout << *it++ << std::endl;
         }
+        std::cout << std::endl;
 
-//        std::cout << "\033[1;31msize:\033[0m\n" << list.size() << std::endl;
-//        std::cout << "\033[1;31mcontent:\033[0m\n";
-//        it = test.begin();
-//        ite = test.end();
-//        while (it != ite)
-//        {
-//            std::cout << *it++ << std::endl;
-//        }
+        std::cout << "\033[1;31msize:\033[0m\n" << test.size() << std::endl;
+        std::cout << "\033[1;31mcontent:\033[0m\n";
+        it = test.begin();
+        ite = test.end();
+        while (it != ite)
+        {
+            std::cout << *it++ << std::endl;
+        }
         std::cout << std::endl;
 	}
 	std::cout << "\033[1;32m-- std::list --\033[0m\n";
@@ -61,34 +66,38 @@ int main()
         list.push_back(33);
         list.push_back(150);
 
-//        std::list<std::string> test(3, "gang");
-
-
-//        it++;
-//        it++;
-
-//        test.splice(test.begin(), list);
+        std::list<int> test;
+        test.push_back(1);
+        test.push_back(15);
+        test.push_back(2);
+        test.push_back(99);
+        test.push_back(3);
 
         list.sort();
-        list.reverse();
-        it = list.begin();
-        ite = list.end();
+        test.sort();
+
+        list.merge(test);
+
+        test.push_back(43);
 
         std::cout << "\033[1;31msize:\033[0m\n" << list.size() << std::endl;
         std::cout << "\033[1;31mcontent:\033[0m\n";
+        it = list.begin();
+        ite = list.end();
         while (it != ite)
         {
             std::cout << *it++ << std::endl;
         }
+        std::cout << std::endl;
 
-//        std::cout << "\033[1;31msize:\033[0m\n" << list.size() << std::endl;
-//        std::cout << "\033[1;31mcontent:\033[0m\n";
-//        it = test.begin();
-//        ite = test.end();
-//        while (it != ite)
-//        {
-//            std::cout << *it++ << std::endl;
-//        }
+        std::cout << "\033[1;31msize:\033[0m\n" << test.size() << std::endl;
+        std::cout << "\033[1;31mcontent:\033[0m\n";
+        it = test.begin();
+        ite = test.end();
+        while (it != ite)
+        {
+            std::cout << *it++ << std::endl;
+        }
         std::cout << std::endl;
 	}
 }
