@@ -2,7 +2,7 @@
 <CodeBlocks_project_file>
 	<FileVersion major="1" minor="6"/>
 	<Project>
-		<Option title="containers"/>
+		<Option title="ft_containers"/>
 		<Option makefile_is_custom="1"/>
 		<Option compiler="gcc"/>
 		<Option virtualFolders="CMake Files\;"/>
@@ -37,8 +37,8 @@
 					<DistClean command="/usr/bin/make -j2 -f &quot;/home/user42/Bureau/projects/ft_containers/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
-			<Target title="module">
-				<Option output="/home/user42/Bureau/projects/ft_containers/cmake-build-debug/module" prefix_auto="0" extension_auto="0"/>
+			<Target title="ft_containers">
+				<Option output="/home/user42/Bureau/projects/ft_containers/cmake-build-debug/ft_containers" prefix_auto="0" extension_auto="0"/>
 				<Option working_dir="/home/user42/Bureau/projects/ft_containers/cmake-build-debug"/>
 				<Option object_output="./"/>
 				<Option type="1"/>
@@ -54,14 +54,14 @@
 					<Add directory="/usr/include"/>
 				</Compiler>
 				<MakeCommands>
-					<Build command="/usr/bin/make -j2 -f &quot;/home/user42/Bureau/projects/ft_containers/cmake-build-debug/Makefile&quot;  VERBOSE=1 module"/>
+					<Build command="/usr/bin/make -j2 -f &quot;/home/user42/Bureau/projects/ft_containers/cmake-build-debug/Makefile&quot;  VERBOSE=1 ft_containers"/>
 					<CompileFile command="/usr/bin/make -j2 -f &quot;/home/user42/Bureau/projects/ft_containers/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
 					<Clean command="/usr/bin/make -j2 -f &quot;/home/user42/Bureau/projects/ft_containers/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 					<DistClean command="/usr/bin/make -j2 -f &quot;/home/user42/Bureau/projects/ft_containers/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
-			<Target title="module/fast">
-				<Option output="/home/user42/Bureau/projects/ft_containers/cmake-build-debug/module" prefix_auto="0" extension_auto="0"/>
+			<Target title="ft_containers/fast">
+				<Option output="/home/user42/Bureau/projects/ft_containers/cmake-build-debug/ft_containers" prefix_auto="0" extension_auto="0"/>
 				<Option working_dir="/home/user42/Bureau/projects/ft_containers/cmake-build-debug"/>
 				<Option object_output="./"/>
 				<Option type="1"/>
@@ -77,21 +77,18 @@
 					<Add directory="/usr/include"/>
 				</Compiler>
 				<MakeCommands>
-					<Build command="/usr/bin/make -j2 -f &quot;/home/user42/Bureau/projects/ft_containers/cmake-build-debug/Makefile&quot;  VERBOSE=1 module/fast"/>
+					<Build command="/usr/bin/make -j2 -f &quot;/home/user42/Bureau/projects/ft_containers/cmake-build-debug/Makefile&quot;  VERBOSE=1 ft_containers/fast"/>
 					<CompileFile command="/usr/bin/make -j2 -f &quot;/home/user42/Bureau/projects/ft_containers/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
 					<Clean command="/usr/bin/make -j2 -f &quot;/home/user42/Bureau/projects/ft_containers/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 					<DistClean command="/usr/bin/make -j2 -f &quot;/home/user42/Bureau/projects/ft_containers/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 		</Build>
-		<Unit filename="/home/user42/Bureau/projects/ft_containers/List/List.hpp">
-			<Option target="module"/>
+		<Unit filename="/home/user42/Bureau/projects/ft_containers/Map/Map.hpp">
+			<Option target="ft_containers"/>
 		</Unit>
-		<Unit filename="/home/user42/Bureau/projects/ft_containers/Queue/Queue.hpp">
-			<Option target="module"/>
-		</Unit>
-		<Unit filename="/home/user42/Bureau/projects/ft_containers/Queue/main.cpp">
-			<Option target="module"/>
+		<Unit filename="/home/user42/Bureau/projects/ft_containers/Map/main.cpp">
+			<Option target="ft_containers"/>
 		</Unit>
 		<Unit filename="/home/user42/Bureau/projects/ft_containers/CMakeLists.txt">
 			<Option virtualFolder="CMake Files\"/>

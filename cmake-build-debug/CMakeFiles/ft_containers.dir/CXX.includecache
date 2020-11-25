@@ -1,0 +1,20 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/user42/Bureau/projects/ft_containers/Map/Map.hpp
+iostream
+-
+
+/home/user42/Bureau/projects/ft_containers/Map/main.cpp
+Map.hpp
+/home/user42/Bureau/projects/ft_containers/Map/Map.hpp
+map
+-
+iostream
+-
+

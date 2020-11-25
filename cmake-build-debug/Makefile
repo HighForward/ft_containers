@@ -59,10 +59,10 @@ cmake_force:
 SHELL = /bin/sh
 
 # The CMake executable.
-CMAKE_COMMAND = /home/user42/Bureau/clion-2020.1.2/bin/cmake/linux/bin/cmake
+CMAKE_COMMAND = /mnt/clion-2020.2.1/bin/cmake/linux/bin/cmake
 
 # The command to remove a file.
-RM = /home/user42/Bureau/clion-2020.1.2/bin/cmake/linux/bin/cmake -E rm -f
+RM = /mnt/clion-2020.2.1/bin/cmake/linux/bin/cmake -E rm -f
 
 # Escaping for special characters.
 EQUALS = =
@@ -79,7 +79,7 @@ CMAKE_BINARY_DIR = /home/user42/Bureau/projects/ft_containers/cmake-build-debug
 # Special rule for the target rebuild_cache
 rebuild_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake to regenerate build system..."
-	/home/user42/Bureau/clion-2020.1.2/bin/cmake/linux/bin/cmake --regenerate-during-build -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
+	/mnt/clion-2020.2.1/bin/cmake/linux/bin/cmake --regenerate-during-build -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
 .PHONY : rebuild_cache
 
 # Special rule for the target rebuild_cache
@@ -90,7 +90,7 @@ rebuild_cache/fast: rebuild_cache
 # Special rule for the target edit_cache
 edit_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "No interactive CMake dialog available..."
-	/home/user42/Bureau/clion-2020.1.2/bin/cmake/linux/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
+	/mnt/clion-2020.2.1/bin/cmake/linux/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
 .PHONY : edit_cache
 
 # Special rule for the target edit_cache
@@ -131,44 +131,44 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named module
+# Target rules for targets named ft_containers
 
 # Build rule for target.
-module: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 module
-.PHONY : module
+ft_containers: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 ft_containers
+.PHONY : ft_containers
 
 # fast build rule for target.
-module/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/module.dir/build.make CMakeFiles/module.dir/build
-.PHONY : module/fast
+ft_containers/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ft_containers.dir/build.make CMakeFiles/ft_containers.dir/build
+.PHONY : ft_containers/fast
 
-Queue/main.o: Queue/main.cpp.o
+Map/main.o: Map/main.cpp.o
 
-.PHONY : Queue/main.o
+.PHONY : Map/main.o
 
 # target to build an object file
-Queue/main.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/module.dir/build.make CMakeFiles/module.dir/Queue/main.cpp.o
-.PHONY : Queue/main.cpp.o
+Map/main.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ft_containers.dir/build.make CMakeFiles/ft_containers.dir/Map/main.cpp.o
+.PHONY : Map/main.cpp.o
 
-Queue/main.i: Queue/main.cpp.i
+Map/main.i: Map/main.cpp.i
 
-.PHONY : Queue/main.i
+.PHONY : Map/main.i
 
 # target to preprocess a source file
-Queue/main.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/module.dir/build.make CMakeFiles/module.dir/Queue/main.cpp.i
-.PHONY : Queue/main.cpp.i
+Map/main.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ft_containers.dir/build.make CMakeFiles/ft_containers.dir/Map/main.cpp.i
+.PHONY : Map/main.cpp.i
 
-Queue/main.s: Queue/main.cpp.s
+Map/main.s: Map/main.cpp.s
 
-.PHONY : Queue/main.s
+.PHONY : Map/main.s
 
 # target to generate assembly for a file
-Queue/main.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/module.dir/build.make CMakeFiles/module.dir/Queue/main.cpp.s
-.PHONY : Queue/main.cpp.s
+Map/main.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/ft_containers.dir/build.make CMakeFiles/ft_containers.dir/Map/main.cpp.s
+.PHONY : Map/main.cpp.s
 
 # Help Target
 help:
@@ -178,10 +178,10 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
-	@echo "... module"
-	@echo "... Queue/main.o"
-	@echo "... Queue/main.i"
-	@echo "... Queue/main.s"
+	@echo "... ft_containers"
+	@echo "... Map/main.o"
+	@echo "... Map/main.i"
+	@echo "... Map/main.s"
 .PHONY : help
 
 

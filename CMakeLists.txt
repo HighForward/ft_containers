@@ -1,9 +1,7 @@
-cmake_minimum_required(VERSION 2.8)
+cmake_minimum_required(VERSION 3.15)
+project(ft_containers)
 
-project(containers)
+set(CMAKE_CXX_STANDARD 98)
+set (CMAKE_CXX_FLAGS "-Wall -Wextra -Werror -std=c++98")
 
-set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++98")
-
-file(GLOB containers)
-
-add_executable(module ${containers} List/List.hpp Queue/Queue.hpp Queue/main.cpp)
+add_executable(ft_containers Map/Map.hpp Map/main.cpp)
