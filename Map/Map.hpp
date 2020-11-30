@@ -126,6 +126,11 @@ namespace ft {
 				color = RED;
 			}
 
+			int getColor()
+			{
+				return (color);
+			}
+
 	};
 
 	template<class Key, class T>
@@ -168,7 +173,7 @@ namespace ft {
 					root = n;
 					return;
 				}
-				if (curr_node != NULL && n->getPair().first < root->getPair().first)
+				if (curr_node != NULL && n->getPair().first < curr_node->getPair().first)
 				{
 					if (curr_node->getLeft() != FEUILLE)
 					{
@@ -180,7 +185,7 @@ namespace ft {
 						curr_node->setLeft(n);
 					}
 				}
-				else if (root != NULL && n->getPair().first > root->getPair().first)
+				else if (root != NULL && n->getPair().first > curr_node->getPair().first)
 				{
 					if (curr_node->getRight() != FEUILLE)
 					{
@@ -193,13 +198,19 @@ namespace ft {
 					}
 				}
 				n->setParent(curr_node);
-				n->setRight(new node_type(std::pair<int, std::string>(99, "GIGABYTE")));
 			}
 
 			void repair_tree(node_type *n)
 			{
-				if (size() == 1)
-				std::cout << n->getRight()->getPair().second << std::endl;
+				if (n->getParent() == NULL)
+					n->black();
+				else if (n->getUncle() != NULL && n->getUncle()->getColor() == RED)
+				{
+					n->getParent()->black();
+					n->getUncle()->black();
+					n->getGrandParent()->red();
+					repair_tree(n->getGrandParent());
+				}
 			}
 
 			void insert(const value_type &val)
@@ -231,6 +242,22 @@ namespace ft {
 			void clear()
 			{
 				clear(root);
+			}
+
+			void recursive_print(node_type *current)
+			{
+				if (current == NULL)
+					return;
+
+				recursive_print(current->getLeft());
+				recursive_print(current->getRight());
+
+				std::cout << current->getPair().first << " : " << current->getPair().second << std::endl;
+			}
+
+			void print()
+			{
+				recursive_print(root);
 			}
 
 	};
