@@ -18,23 +18,18 @@ int main()
 		node.getGrandParent();
 
 		map.insert(std::pair<int, std::string>(16, "bite"));
-		map.insert(std::pair<int, std::string>(14, "bite"));
-		map.insert(std::pair<int, std::string>(9, "bite"));
-		map.insert(std::pair<int, std::string>(19, "bite"));
-		map.insert(std::pair<int, std::string>(13, "bite"));
-		map.insert(std::pair<int, std::string>(23, "bite"));
-		map.insert(std::pair<int, std::string>(10, "bite"));
-		map.insert(std::pair<int, std::string>(21, "bite"));
-		map.insert(std::pair<int, std::string>(11, "bite"));
-		map.insert(std::pair<int, std::string>(15, "bite"));
-		map.insert(std::pair<int, std::string>(7, "bite"));
-		map.insert(std::pair<int, std::string>(22, "bite"));
-		map.insert(std::pair<int, std::string>(1, "bite"));
-		map.insert(std::pair<int, std::string>(5, "bite"));
-		map.insert(std::pair<int, std::string>(25, "bite"));
+		map.insert(std::pair<int, std::string>(14, "octobite"));
+		map.insert(std::pair<int, std::string>(9, "gigabite"));
+		map.insert(std::pair<int, std::string>(19, "nanobite"));
+		map.insert(std::pair<int, std::string>(13, "megabite"));
 
-		std::cout << map.size() << std::endl;
-		map.print();
+		std::cout << "size: " << map.size() << std::endl;
+
+		it = map.begin();
+		it++;
+		it.print();
+
+//		map.print();
 		map.clear();
 	}
 	std::cout << "--- std::map ---" << std::endl;

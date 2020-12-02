@@ -1,7 +1,5 @@
 #include <iostream>
-#define RED 0
-#define BLACK 1
-#define FEUILLE NULL
+#define LEAVES NULL
 
 namespace ft {
 
@@ -35,7 +33,6 @@ namespace ft {
 			Node *left;
 			Node *right;
 			Node *parent;
-			int color;
 
 		public:
 			Node()
@@ -43,8 +40,6 @@ namespace ft {
 				parent = NULL;
 				left = NULL;
 				right = NULL;
-//				pair = NULL;
-				color = BLACK;
 			}
 
 			Node(const std::pair<Key, T> &val)
@@ -53,7 +48,6 @@ namespace ft {
 				parent = NULL;
 				left = NULL;
 				right = NULL;
-				color = BLACK;
 			}
 
 			Node *getParent()
@@ -116,28 +110,46 @@ namespace ft {
 				right = n;
 			}
 
-			void black()
-			{
-				color = BLACK;
-			}
-
-			void red()
-			{
-				color = RED;
-			}
-
-			int getColor()
-			{
-				return (color);
-			}
-
 	};
 
 	template<class Key, class T>
 	class mapIterator
 	{
-		private:
-			Node<Key, T> *node;
+		public:
+			typedef Node<Key, T> node_type;
+			node_type *node;
+
+		public:
+
+			mapIterator() : node() {}
+			mapIterator(node_type *n) : node(n) {}
+
+			mapIterator& operator++()
+			{
+				if (node->getRight())
+				{
+					node = node->getRight();
+					while (node->getLeft())
+						node = node->getLeft();
+				}
+				else
+				{
+					node_type * tmp;
+					do
+					{
+						tmp = node;
+						node = node->getParent();
+					}
+					while (node && tmp == node->getRight());
+				}
+				return *this;
+			}
+
+			void print()
+			{
+				std::cout << node->getPair().first << " : " << node->getPair().second << std::endl;
+			}
+
 	};
 
 
@@ -165,17 +177,69 @@ namespace ft {
 				_size = 0;
 			}
 
+			//Iterator
+			iterator begin()
+			{
+				node_type *tmp = root;
+				while (tmp->getLeft())
+					tmp = tmp->getLeft();
+				return (iterator(tmp));
+			}
+
+			//Capacity
+
+			bool empty() const
+			{
+				return (_size == 0);
+			}
+
+			size_type size()
+			{
+				return (_size);
+			}
+
+			size_type max_size()
+			{
+				return (0);
+			}
+
+			//Element access
+
+			mapped_type& operator[] (const key_type& k)
+			{
+				node_type *tmp = root;
+				while (tmp)
+				{
+					if (tmp->getPair().first == k)
+					{
+						return (tmp->getPair().second);
+					}
+					else if (k < tmp->getPair().first)
+					{
+						tmp = tmp->getLeft();
+						continue;
+					}
+					else if (k > tmp->getPair().first)
+					{
+						tmp = tmp->getRight();
+						continue;
+					}
+				}
+				value_type n(k, mapped_type());
+				insert(n);
+				return (operator[](k));
+			}
+
 			void recursive_insert(node_type *curr_node, node_type *n)
 			{
 				if (root == NULL)
 				{
-					n->black();
 					root = n;
 					return;
 				}
 				if (curr_node != NULL && n->getPair().first < curr_node->getPair().first)
 				{
-					if (curr_node->getLeft() != FEUILLE)
+					if (curr_node->getLeft() != NULL)
 					{
 						recursive_insert(curr_node->getLeft(), n);
 						return;
@@ -185,7 +249,7 @@ namespace ft {
 				}
 				else if (root != NULL && n->getPair().first > curr_node->getPair().first)
 				{
-					if (curr_node->getRight() != FEUILLE)
+					if (curr_node->getRight() != NULL)
 					{
 						recursive_insert(curr_node->getRight(), n);
 						return;
@@ -196,123 +260,23 @@ namespace ft {
 				n->setParent(curr_node);
 			}
 
-			void RotateLeft(node_type *n)
-			{
-				node_type *nnew = n->getRight();
-				node_type *p = n->getParent();
-
-				n->setRight(nnew->getLeft());
-				nnew->setLeft(n);
-				if (n->getRight() != NULL)
-				{
-					n->getRight()->setParent(n);
-				}
-
-				if (p != NULL)
-				{
-					if (n == p->getLeft())
-					{
-						p->setLeft(nnew);
-					}
-					else if (n == p->getRight())
-					{
-						p->setRight(nnew);
-					}
-				}
-				nnew->setParent(p);
-			}
-
-			void RotateRight(node_type *n)
-			{
-				node_type *nnew = n->getLeft();
-				node_type *p = n->getLeft();
-
-				n->setLeft(nnew->getRight());
-				nnew->setRight(n);
-				n->setParent(nnew);
-
-				if (n->getLeft() != NULL)
-				{
-					n->getLeft()->setParent(n);
-				}
-
-				if (p != NULL)
-				{
-					if (n == p->getLeft())
-					{
-						p->setLeft(nnew);
-					}
-					else if (n == p->getRight())
-					{
-						p->setRight(nnew);
-					}
-				}
-				nnew->setParent(p);
-			}
-
-			void repair_tree(node_type *n)
-			{
-				if (n->getParent() == NULL)
-					n->black();
-				else if (n->getUncle() != NULL && n->getUncle()->getColor() == RED)
-				{
-					n->getParent()->black();
-					n->getUncle()->black();
-					n->getGrandParent()->red();
-					repair_tree(n->getGrandParent());
-				}
-				else
-				{
-					if (n == n->getParent()->getRight() && n->getGrandParent() != NULL && n->getParent() == n->getGrandParent()->getRight())
-					{
-						RotateLeft(n->getParent());
-						n = n->getLeft();
-					}
-					else if (n == n->getParent()->getLeft() && n->getGrandParent() != NULL && n->getParent() == n->getGrandParent()->getRight())
-					{
-						RotateRight(n->getParent());
-						n = n->getRight();
-					}
-
-					node_type *p = n->getParent();
-					node_type *g = n->getGrandParent();
-
-//					if (n == p->getLeft())
-//					{
-//						if (g != NULL)
-//							RotateRight(g);
-//					}
-//					else
-//					{
-//						RotateLeft(g);
-//					}
-//					n->getGrandParent()->red();
-//					n->getParent()->black();
-
-				}
-			}
+			//Modifiers
 
 			void insert(const value_type &val)
 			{
 				Node<key_type, mapped_type> *new_node = new node_type(val);
 				recursive_insert(root, new_node);
-				repair_tree(new_node);
 				_size++;
 //				return NULL;
 			}
 
-			size_type size()
-			{
-				return (_size);
-			}
-
-			void clear(node_type *current)
+			void recursive_clear(node_type *current)
 			{
 				if (current == NULL)
 					return;
 
-				clear(current->getLeft());
-				clear(current->getRight());
+				recursive_clear(current->getLeft());
+				recursive_clear(current->getRight());
 
 				std::cout << "delete: " << current->getPair().first << " : " << current->getPair().second << std::endl;
 				delete (current);
@@ -320,7 +284,7 @@ namespace ft {
 
 			void clear()
 			{
-				clear(root);
+				recursive_clear(root);
 			}
 
 			void recursive_print(node_type *current)
