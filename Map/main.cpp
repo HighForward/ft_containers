@@ -2,20 +2,11 @@
 #include "test.hpp"
 #include <map>
 #include <iostream>
+#include <assert.h>
 
-
-
-void ft_test(const test<const int, std::string> &n)
-{
-	std::cout << n.first << " - " << n.second << std::endl;
-}
 
 int main()
 {
-
-	ft_test(test<int, std::string>(15, "quarante-deux"));
-
-	/*
 	std::cout << "--- ft::map ---" <<std::endl;
 	{
 		ft::map<int, std::string> map;
@@ -28,8 +19,18 @@ int main()
 
 		map.insert(std::pair<int, std::string>(16, "bite"));
 		map.insert(std::pair<int, std::string>(14, "bite"));
+		map.insert(std::pair<int, std::string>(9, "bite"));
 		map.insert(std::pair<int, std::string>(19, "bite"));
+		map.insert(std::pair<int, std::string>(13, "bite"));
+		map.insert(std::pair<int, std::string>(23, "bite"));
+		map.insert(std::pair<int, std::string>(10, "bite"));
+		map.insert(std::pair<int, std::string>(21, "bite"));
+		map.insert(std::pair<int, std::string>(11, "bite"));
+		map.insert(std::pair<int, std::string>(15, "bite"));
+		map.insert(std::pair<int, std::string>(7, "bite"));
 		map.insert(std::pair<int, std::string>(22, "bite"));
+		map.insert(std::pair<int, std::string>(1, "bite"));
+		map.insert(std::pair<int, std::string>(5, "bite"));
 		map.insert(std::pair<int, std::string>(25, "bite"));
 
 		std::cout << map.size() << std::endl;
@@ -53,5 +54,5 @@ int main()
 			std::cout << it->first << " => " << it->second << std::endl;
 			it++;
 		}
-	}*/
+	}
 }

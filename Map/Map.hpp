@@ -181,9 +181,7 @@ namespace ft {
 						return;
 					}
 					else
-					{
 						curr_node->setLeft(n);
-					}
 				}
 				else if (root != NULL && n->getPair().first > curr_node->getPair().first)
 				{
@@ -193,11 +191,63 @@ namespace ft {
 						return;
 					}
 					else
-					{
 						curr_node->setRight(n);
-					}
 				}
 				n->setParent(curr_node);
+			}
+
+			void RotateLeft(node_type *n)
+			{
+				node_type *nnew = n->getRight();
+				node_type *p = n->getParent();
+
+				n->setRight(nnew->getLeft());
+				nnew->setLeft(n);
+				if (n->getRight() != NULL)
+				{
+					n->getRight()->setParent(n);
+				}
+
+				if (p != NULL)
+				{
+					if (n == p->getLeft())
+					{
+						p->setLeft(nnew);
+					}
+					else if (n == p->getRight())
+					{
+						p->setRight(nnew);
+					}
+				}
+				nnew->setParent(p);
+			}
+
+			void RotateRight(node_type *n)
+			{
+				node_type *nnew = n->getLeft();
+				node_type *p = n->getLeft();
+
+				n->setLeft(nnew->getRight());
+				nnew->setRight(n);
+				n->setParent(nnew);
+
+				if (n->getLeft() != NULL)
+				{
+					n->getLeft()->setParent(n);
+				}
+
+				if (p != NULL)
+				{
+					if (n == p->getLeft())
+					{
+						p->setLeft(nnew);
+					}
+					else if (n == p->getRight())
+					{
+						p->setRight(nnew);
+					}
+				}
+				nnew->setParent(p);
 			}
 
 			void repair_tree(node_type *n)
@@ -210,6 +260,35 @@ namespace ft {
 					n->getUncle()->black();
 					n->getGrandParent()->red();
 					repair_tree(n->getGrandParent());
+				}
+				else
+				{
+					if (n == n->getParent()->getRight() && n->getGrandParent() != NULL && n->getParent() == n->getGrandParent()->getRight())
+					{
+						RotateLeft(n->getParent());
+						n = n->getLeft();
+					}
+					else if (n == n->getParent()->getLeft() && n->getGrandParent() != NULL && n->getParent() == n->getGrandParent()->getRight())
+					{
+						RotateRight(n->getParent());
+						n = n->getRight();
+					}
+
+					node_type *p = n->getParent();
+					node_type *g = n->getGrandParent();
+
+//					if (n == p->getLeft())
+//					{
+//						if (g != NULL)
+//							RotateRight(g);
+//					}
+//					else
+//					{
+//						RotateLeft(g);
+//					}
+//					n->getGrandParent()->red();
+//					n->getParent()->black();
+
 				}
 			}
 
