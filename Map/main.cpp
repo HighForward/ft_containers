@@ -14,18 +14,19 @@ int main()
 		ft::map<int, std::string>::iterator ite;
 
 		map.insert(std::pair<int, std::string>(8, "bite"));
-		map.insert(std::pair<int, std::string>(4, "octobite"));
+		map.insert(std::pair<int, std::string>(10, "octobite"));
 		map.insert(std::pair<int, std::string>(2, "gigabite"));
 		map.insert(std::pair<int, std::string>(1, "gigabite"));
 		map.insert(std::pair<int, std::string>(6, "nanobite"));
 		map.insert(std::pair<int, std::string>(12, "megabite"));
 		map.insert(std::pair<int, std::string>(10, "megabite"));
-		map.insert(std::pair<int, std::string>(14, "megabite"));
+//		map.insert(std::pair<int, std::string>(14, "megabite"));
 
 //		std::cout << "size: " << map.size() << std::endl;
 //		it.print();
 
         it = map.begin();
+        it++;
         it++;
         it++;
 		map.print();

@@ -132,6 +132,15 @@ namespace ft {
 		public:
 			mapIterator() : node() {}
 			mapIterator(node_type *n) : node(n) {}
+			mapIterator(const mapIterator &i) {
+			    this->node = i.node;
+			}
+
+			mapIterator& operator=(const mapIterator &copy)
+            {
+                this->node = copy.node;
+                return *this;
+            }
 
 			mapIterator& operator++()
 			{
@@ -164,6 +173,11 @@ namespace ft {
             bool operator!=(mapIterator<Key, T> const &rhs)
             {
                 return (this->node != rhs.node);
+            }
+
+            bool operator==(mapIterator<Key, T> const &rhs)
+            {
+                return (this->node == rhs.node);
             }
 
             node_type *getNode()
@@ -226,6 +240,36 @@ namespace ft {
                 n->setParent(curr_node);
             }
 
+            node_type *search_by_key(const key_type &k)
+            {
+                node_type *tmp = root;
+                while (tmp)
+                {
+                    if (tmp->getPair().first == k)
+                        return (tmp);
+                    else if (k < tmp->getPair().first)
+                    {
+                        tmp = tmp->getLeft();
+                        continue;
+                    }
+                    else if (k > tmp->getPair().first)
+                    {
+                        tmp = tmp->getRight();
+                        continue;
+                    }
+                }
+                return (NULL);
+            }
+
+            void recursive_clear(node_type *current)
+            {
+                if (current == NULL)
+                    return;
+                recursive_clear(current->getLeft());
+                recursive_clear(current->getRight());
+                delete (current);
+            }
+
 		public:
 			map()
 			{
@@ -272,9 +316,7 @@ namespace ft {
 				while (tmp)
 				{
 					if (tmp->getPair().first == k)
-					{
 						return (tmp->getPair().second);
-					}
 					else if (k < tmp->getPair().first)
 					{
 						tmp = tmp->getLeft();
@@ -306,6 +348,11 @@ namespace ft {
                 node_type *n = position.getNode();
                 if (n == NULL)
                     return ;
+                else if (_size == 1 && position == iterator(root))
+                {
+                    delete (n);
+                    root = NULL;
+                }
                 else if (n->getRight() == NULL && n->getLeft() == NULL)
                 {
                     node_type *p = n->getParent();
@@ -313,6 +360,7 @@ namespace ft {
                         p->setRight(NULL);
                     else
                         p->setLeft(NULL);
+                    _size--;
                     delete (n);
                 }
                 else if ((n->getRight() == NULL && n->getLeft() != NULL) || (n->getRight() != NULL && n->getLeft() == NULL))
@@ -328,7 +376,8 @@ namespace ft {
                     else
                         p->setLeft(c);
                     c->setParent(p);
-                    delete n;
+                    _size--;
+                    delete (n);
                 }
                 else if (n->getLeft() && n->getRight())
                 {
@@ -339,41 +388,49 @@ namespace ft {
 
             }
 
+            size_type erase(const key_type& k)
+            {
+                node_type *n;
+                if ((n = search_by_key(k)))
+                    erase(iterator(n));
+                return (0);
+            }
 
+            void erase(iterator first, iterator last)
+            {
+                //todo;
+            }
 
-
-
-			void recursive_clear(node_type *current)
-			{
-				if (current == NULL)
-					return;
-				recursive_clear(current->getLeft());
-				recursive_clear(current->getRight());
-				delete (current);
-			}
 
 			void clear()
 			{
 				recursive_clear(root);
 			}
 
-			void print2D(node_type *root, int space)
+
+
+
+
+
+
+
+			void print2D(node_type *n, int space)
             {
 			    int COUNT = 7;
 
-			    if (root == NULL)
+			    if (n == NULL)
                     return;
 
 			    space+= COUNT;
 
-			    print2D(root->getRight(), space);
+			    print2D(n->getRight(), space);
 
 			    std::cout << '\n';
 			    for (int i = COUNT; i < space; i++)
 			        std::cout << " ";
-			    std::cout << root->getPair().first << "->" << root->getPair().second << std::endl;
+			    std::cout << n->getPair().first << "->" << n->getPair().second << std::endl;
 
-			    print2D(root->getLeft(), space);
+			    print2D(n->getLeft(), space);
             }
 
             void print()
