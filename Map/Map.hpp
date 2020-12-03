@@ -110,6 +110,14 @@ namespace ft {
 				right = n;
 			}
 
+			Node* getSuccessor()
+            {
+			    Node *tmp = left;
+			    while (tmp->getRight())
+			        tmp = tmp->getRight();
+			    return (tmp);
+            }
+
 	};
 
 	template<class Key, class T>
@@ -117,10 +125,11 @@ namespace ft {
 	{
 		public:
 			typedef Node<Key, T> node_type;
+
+	    private:
 			node_type *node;
 
 		public:
-
 			mapIterator() : node() {}
 			mapIterator(node_type *n) : node(n) {}
 
@@ -134,7 +143,7 @@ namespace ft {
 				}
 				else
 				{
-					node_type * tmp;
+					node_type *tmp;
 					do
 					{
 						tmp = node;
@@ -142,8 +151,25 @@ namespace ft {
 					}
 					while (node && tmp == node->getRight());
 				}
-				return *this;
+				return (*this);
 			}
+
+			mapIterator operator++(int)
+            {
+			    mapIterator<Key, T>tmp = *this;
+			    operator++();
+			    return (tmp);
+            }
+
+            bool operator!=(mapIterator<Key, T> const &rhs)
+            {
+                return (this->node != rhs.node);
+            }
+
+            node_type *getNode()
+            {
+			    return (node);
+            }
 
 			void print()
 			{
@@ -166,9 +192,39 @@ namespace ft {
 			typedef size_t 									size_type;
 			typedef Node<key_type, mapped_type>				node_type;
 
-		public:
+		private:
 			Node<key_type, mapped_type> *root;
 			size_type _size;
+
+            void recursive_insert(node_type *curr_node, node_type *n)
+            {
+                if (root == NULL)
+                {
+                    root = n;
+                    return;
+                }
+                if (curr_node != NULL && n->getPair().first < curr_node->getPair().first)
+                {
+                    if (curr_node->getLeft() != NULL)
+                    {
+                        recursive_insert(curr_node->getLeft(), n);
+                        return;
+                    }
+                    else
+                        curr_node->setLeft(n);
+                }
+                else if (root != NULL && n->getPair().first > curr_node->getPair().first)
+                {
+                    if (curr_node->getRight() != NULL)
+                    {
+                        recursive_insert(curr_node->getRight(), n);
+                        return;
+                    }
+                    else
+                        curr_node->setRight(n);
+                }
+                n->setParent(curr_node);
+            }
 
 		public:
 			map()
@@ -185,6 +241,11 @@ namespace ft {
 					tmp = tmp->getLeft();
 				return (iterator(tmp));
 			}
+
+			iterator end()
+            {
+			    return (iterator(root->getParent()));
+            }
 
 			//Capacity
 
@@ -230,36 +291,6 @@ namespace ft {
 				return (operator[](k));
 			}
 
-			void recursive_insert(node_type *curr_node, node_type *n)
-			{
-				if (root == NULL)
-				{
-					root = n;
-					return;
-				}
-				if (curr_node != NULL && n->getPair().first < curr_node->getPair().first)
-				{
-					if (curr_node->getLeft() != NULL)
-					{
-						recursive_insert(curr_node->getLeft(), n);
-						return;
-					}
-					else
-						curr_node->setLeft(n);
-				}
-				else if (root != NULL && n->getPair().first > curr_node->getPair().first)
-				{
-					if (curr_node->getRight() != NULL)
-					{
-						recursive_insert(curr_node->getRight(), n);
-						return;
-					}
-					else
-						curr_node->setRight(n);
-				}
-				n->setParent(curr_node);
-			}
-
 			//Modifiers
 
 			void insert(const value_type &val)
@@ -270,15 +301,54 @@ namespace ft {
 //				return NULL;
 			}
 
+			void erase (iterator position)
+            {
+                node_type *n = position.getNode();
+                if (n == NULL)
+                    return ;
+                else if (n->getRight() == NULL && n->getLeft() == NULL)
+                {
+                    node_type *p = n->getParent();
+                    if (p->getRight() == n)
+                        p->setRight(NULL);
+                    else
+                        p->setLeft(NULL);
+                    delete (n);
+                }
+                else if ((n->getRight() == NULL && n->getLeft() != NULL) || (n->getRight() != NULL && n->getLeft() == NULL))
+                {
+                    node_type *p = n->getParent();
+                    node_type *c;
+                    if (n->getRight() != NULL)
+                        c = n->getRight();
+                    else
+                        c = n->getLeft();
+                    if (p->getRight() == n)
+                        p->setRight(c);
+                    else
+                        p->setLeft(c);
+                    c->setParent(p);
+                    delete n;
+                }
+                else if (n->getLeft() && n->getRight())
+                {
+                    node_type *tmp = n->getSuccessor();
+                    n->getPair() = tmp->getPair();
+                    erase(iterator(tmp));
+                }
+
+            }
+
+
+
+
+
 			void recursive_clear(node_type *current)
 			{
 				if (current == NULL)
 					return;
-
 				recursive_clear(current->getLeft());
 				recursive_clear(current->getRight());
-
-				std::cout << "delete: " << current->getPair().first << " : " << current->getPair().second << std::endl;
 				delete (current);
 			}
 
@@ -287,21 +357,29 @@ namespace ft {
 				recursive_clear(root);
 			}
 
-			void recursive_print(node_type *current)
-			{
-				if (current == NULL)
-					return;
+			void print2D(node_type *root, int space)
+            {
+			    int COUNT = 7;
 
-				recursive_print(current->getLeft());
-				recursive_print(current->getRight());
+			    if (root == NULL)
+                    return;
 
-				std::cout << current->getPair().first << " : " << current->getPair().second << std::endl;
-			}
+			    space+= COUNT;
 
-			void print()
-			{
-				recursive_print(root);
-			}
+			    print2D(root->getRight(), space);
+
+			    std::cout << '\n';
+			    for (int i = COUNT; i < space; i++)
+			        std::cout << " ";
+			    std::cout << root->getPair().first << "->" << root->getPair().second << std::endl;
+
+			    print2D(root->getLeft(), space);
+            }
+
+            void print()
+            {
+			    print2D(root, 0);
+            }
 
 	};
 
