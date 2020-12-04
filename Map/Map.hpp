@@ -112,10 +112,20 @@ namespace ft {
 
 			Node* getSuccessor()
             {
-			    Node *tmp = left;
-			    while (tmp->getRight())
-			        tmp = tmp->getRight();
-			    return (tmp);
+			    if (left != NULL)
+                {
+                    Node *tmp = left;
+                    while (tmp->getRight())
+                        tmp = tmp->getRight();
+                    return (tmp);
+                }
+			    else
+                {
+                    Node *tmp = right;
+                    while (tmp->getLeft())
+                        tmp = tmp->getLeft();
+                    return (tmp);
+                }
             }
 
 	};
@@ -335,13 +345,18 @@ namespace ft {
 
 			//Modifiers
 
-			void insert(const value_type &val)
+			std::pair<iterator, bool> insert(const value_type &val)
 			{
+                if (search_by_key(val.first))
+                    return (std::pair<iterator, bool>(iterator(search_by_key(val.first)), false));
 				Node<key_type, mapped_type> *new_node = new node_type(val);
 				recursive_insert(root, new_node);
 				_size++;
-//				return NULL;
+				return (std::pair<iterator, bool>(iterator(search_by_key(val.first)), true));
 			}
+
+			//insert(with hint)
+			//insert(first, last)
 
 			void erase (iterator position)
             {
@@ -371,11 +386,19 @@ namespace ft {
                         c = n->getRight();
                     else
                         c = n->getLeft();
-                    if (p->getRight() == n)
-                        p->setRight(c);
+                    if (n != root)
+                    {
+                        if (p->getRight() == n)
+                            p->setRight(c);
+                        else
+                            p->setLeft(c);
+                        c->setParent(p);
+                    }
                     else
-                        p->setLeft(c);
-                    c->setParent(p);
+                    {
+                        root = c;
+                        root->setParent(NULL);
+                    }
                     _size--;
                     delete (n);
                 }
@@ -385,7 +408,6 @@ namespace ft {
                     n->getPair() = tmp->getPair();
                     erase(iterator(tmp));
                 }
-
             }
 
             size_type erase(const key_type& k)
@@ -398,7 +420,8 @@ namespace ft {
 
             void erase(iterator first, iterator last)
             {
-                //todo;
+                while (first != last)
+                    erase(first++);
             }
 
 
@@ -408,8 +431,16 @@ namespace ft {
 			}
 
 
+            //Observers
 
+            key_compare key_comp() const
+            {
+                return (key_compare());
+            }
 
+            //value_comp()
+
+            
 
 
 

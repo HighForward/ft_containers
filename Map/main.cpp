@@ -20,18 +20,18 @@ int main()
 		map.insert(std::pair<int, std::string>(6, "nanobite"));
 		map.insert(std::pair<int, std::string>(12, "megabite"));
 		map.insert(std::pair<int, std::string>(10, "megabite"));
-//		map.insert(std::pair<int, std::string>(14, "megabite"));
+		map.insert(std::pair<int, std::string>(14, "megabite"));
 
 //		std::cout << "size: " << map.size() << std::endl;
 //		it.print();
 
         it = map.begin();
-        it++;
-        it++;
-        it++;
+        ite = map.end();
 		map.print();
-		map.erase(it);
-		std::cout << "---------" << std::endl;
+
+        map.erase(it, ite);
+
+        std::cout << "---------" << std::endl;
 		map.print();
 	}
 	std::cout << "--- std::map ---" << std::endl;
