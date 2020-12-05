@@ -1,27 +1,11 @@
 #include <iostream>
+#include <cstddef>
+#include <limits>
 #define LEAVES NULL
 
+//TODO : const iterator; reverse iterator; value_comp; and all iterator operator
+
 namespace ft {
-
-	template <class T1, class T2>
-	struct pair
-	{
-		typedef T1 first_type;
-		typedef T2 second_type;
-
-		T1 first;
-		T2	second;
-
-		pair() : first(), second()
-		{
-			std::cout << "gigabite" << std::endl;
-		}
-
-		pair(const first_type& a, const second_type& b) : first(a), second(b)
-		{
-			std::cout << "ultrabite" << std::endl;
-		}
-	};
 
 	template <class Key, class T>
 	class Node
@@ -130,12 +114,11 @@ namespace ft {
 
 	};
 
-	template<class Key, class T>
+	template<class Key, class T, class value_type>
 	class mapIterator
 	{
 		public:
 			typedef Node<Key, T> node_type;
-            typedef std::pair<const Key, T>	value_type;
 
 	    private:
 			node_type *node;
@@ -176,24 +159,47 @@ namespace ft {
 
 			mapIterator operator++(int)
             {
-			    mapIterator<Key, T>tmp = *this;
+			    mapIterator<Key, T, value_type>tmp = *this;
 			    operator++();
 			    return (tmp);
             }
 
-            bool operator!=(mapIterator<Key, T> const &rhs)
+            mapIterator& operator--()
+            {
+			    if (node->getLeft())
+                {
+			        node = node->getLeft();
+			        while (node && node->getRight())
+			            node = node->getRight();
+                }
+			    else
+                {
+                    node_type *tmp;
+                    do
+                    {
+                        tmp = node;
+                        node = node->getParent();
+                    }
+                    while (node && tmp == node->getLeft());
+                }
+			    return (*this);
+            }
+
+            mapIterator operator--(int)
+            {
+                mapIterator<Key, T, value_type>tmp = *this;
+                operator--();
+                return (tmp);
+            }
+
+            bool operator!=(mapIterator<Key, T, value_type> const &rhs)
             {
                 return (this->node != rhs.node);
             }
 
-            bool operator==(mapIterator<Key, T> const &rhs)
+            bool operator==(mapIterator<Key, T, value_type> const &rhs)
             {
                 return (this->node == rhs.node);
-            }
-
-            node_type* getNode()
-            {
-			    return (node);
             }
 
             value_type operator*()
@@ -201,15 +207,14 @@ namespace ft {
                 return (node->getPair());
             }
 
-			void print()
-			{
-				std::cout << node->getPair().first << " : " << node->getPair().second << std::endl;
-			}
-
+            value_type* operator->()
+            {
+                return (&node->getPair());
+            }
 	};
 
 
-	template<class Key, class T, class Compare = std::less<Key>, class Alloc = std::allocator<pair<const Key, T> > >
+	template<class Key, class T, class Compare = std::less<Key>, class Alloc = std::allocator<std::pair<const Key, T> > >
 	class map
 	{
 		public:
@@ -218,13 +223,15 @@ namespace ft {
 			typedef std::pair<const key_type, mapped_type>	value_type;
 			typedef Compare 								key_compare;
 			typedef Alloc									allocator_type;
-			typedef mapIterator<key_type, mapped_type>		iterator;
+			typedef mapIterator<key_type, mapped_type, value_type>		iterator;
 			typedef size_t 									size_type;
 			typedef Node<key_type, mapped_type>				node_type;
 
 		private:
 			Node<key_type, mapped_type> *root;
+			key_compare comp;
 			size_type _size;
+			allocator_type alloc;
 
             void recursive_insert(node_type *curr_node, node_type *n)
             {
@@ -277,15 +284,6 @@ namespace ft {
                 return (NULL);
             }
 
-            void recursive_clear(node_type *current)
-            {
-                if (current == NULL)
-                    return;
-                recursive_clear(current->getLeft());
-                recursive_clear(current->getRight());
-                delete (current);
-            }
-
             template<typename Type>
             void swap(Type &l, Type &r)
             {
@@ -299,6 +297,8 @@ namespace ft {
 			{
 				root = NULL;
 				_size = 0;
+				comp = Compare();
+				alloc = Alloc();
 			}
 
 			//Iterator
@@ -310,12 +310,17 @@ namespace ft {
 				return (iterator(tmp));
 			}
 
+			/*const iterator begin() const*/
+
 			iterator end()
             {
 			    return (iterator(root->getParent()));
             }
 
-			//Capacity
+            /*const iterator end() const*/
+
+
+            //Capacity
 
 			bool empty() const
 			{
@@ -329,7 +334,7 @@ namespace ft {
 
 			size_type max_size()
 			{
-				return (0);
+				return (std::numeric_limits<ptrdiff_t>::max() / sizeof(value_type));
 			}
 
 			//Element access
@@ -385,7 +390,8 @@ namespace ft {
 
 			void erase (iterator position)
             {
-                node_type *n = position.getNode();
+
+                node_type *n = search_by_key((*position).first);
                 if (n == NULL)
                     return ;
                 else if (_size == 1 && position == iterator(root))
@@ -456,7 +462,7 @@ namespace ft {
 
 			void clear()
 			{
-				recursive_clear(root);
+				erase(begin(), end());
 			}
 
 
@@ -488,7 +494,35 @@ namespace ft {
                 return (0);
             }
 
+            iterator lower_bound(const key_type& k)
+            {
+                for (iterator it = begin(); it != end(); it++)
+                {
+                    if (!comp((*it).first, k))
+                        return (it);
+                }
+                return end();
+            }
 
+            iterator upper_bound(const key_type& k)
+            {
+                for (iterator it = begin(); it != end(); it++)
+                {
+                    if (comp(k, (*it).first))
+                        return (it);
+                }
+                return end();
+            }
+
+            std::pair<iterator, iterator> equal_range(const key_type &k)
+            {
+                return (std::pair<iterator, iterator>(lower_bound(k), upper_bound(k)));
+            }
+
+            allocator_type get_allocator() const
+            {
+                return (alloc);
+            }
 
 
 			void print2D(node_type *n, int space)
