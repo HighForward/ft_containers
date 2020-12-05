@@ -135,6 +135,7 @@ namespace ft {
 	{
 		public:
 			typedef Node<Key, T> node_type;
+            typedef std::pair<const Key, T>	value_type;
 
 	    private:
 			node_type *node;
@@ -190,9 +191,14 @@ namespace ft {
                 return (this->node == rhs.node);
             }
 
-            node_type *getNode()
+            node_type* getNode()
             {
 			    return (node);
+            }
+
+            value_type operator*()
+            {
+                return (node->getPair());
             }
 
 			void print()
@@ -363,8 +369,19 @@ namespace ft {
 				return (std::pair<iterator, bool>(iterator(search_by_key(val.first)), true));
 			}
 
-			//insert(with hint)
-			//insert(first, last)
+			iterator insert(iterator position, const value_type &val)
+            {
+                (void)position;
+                std::pair<iterator, bool> ret = insert(val);
+                return (ret.first);
+            }
+
+            template<class InputIterator>
+            void insert (InputIterator first, InputIterator last)
+            {
+                while (first != last)
+                    insert(*first++);
+            }
 
 			void erase (iterator position)
             {
