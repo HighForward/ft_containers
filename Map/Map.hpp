@@ -280,6 +280,14 @@ namespace ft {
                 delete (current);
             }
 
+            template<typename Type>
+            void swap(Type &l, Type &r)
+            {
+                Type tmp(l);
+                l = r;
+                r = tmp;
+            }
+
 		public:
 			map()
 			{
@@ -424,6 +432,10 @@ namespace ft {
                     erase(first++);
             }
 
+            void swap(map& x)
+            {
+                swap(*this, x);
+            }
 
 			void clear()
 			{
@@ -440,7 +452,24 @@ namespace ft {
 
             //value_comp()
 
-            
+            //Operations
+
+            iterator find(const key_type &k)
+            {
+                node_type *n;
+                if ((n = search_by_key(k)))
+                    return (iterator(n));
+                return (end());
+            }
+
+            //const iterator find(const key_type &k)
+
+            size_type count(const key_type &k) const
+            {
+                if (search_by_key(k))
+                    return (1);
+                return (0);
+            }
 
 
 
