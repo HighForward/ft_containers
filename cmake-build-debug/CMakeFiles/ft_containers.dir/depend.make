@@ -3,4 +3,7 @@
 
 CMakeFiles/ft_containers.dir/Map/main.cpp.o: ../Map/Map.hpp
 CMakeFiles/ft_containers.dir/Map/main.cpp.o: ../Map/main.cpp
+CMakeFiles/ft_containers.dir/Map/main.cpp.o: ../Map/test.hpp
+
+CMakeFiles/ft_containers.dir/main.cpp.o: ../main.cpp
 

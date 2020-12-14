@@ -8,54 +8,43 @@ int main()
 {
 	std::cout << "--- ft::map ---" <<std::endl;
 	{
-		ft::map<int, std::string> map;
+		ft::map<int, int> map;
 
-		ft::map<int, std::string>::iterator it;
-		ft::map<int, std::string>::iterator ite;
+		ft::map<int, int>::iterator it;
+		ft::map<int, int>::iterator ite;
 
-		map.insert(std::pair<int, std::string>(8, "bite"));
-		map.insert(std::pair<int, std::string>(10, "octobite"));
-		map.insert(std::pair<int, std::string>(2, "gigabite"));
-		map.insert(std::pair<int, std::string>(1, "gigabite"));
-		map.insert(std::pair<int, std::string>(6, "nanobite"));
-		map.insert(std::pair<int, std::string>(12, "megabite"));
-		map.insert(std::pair<int, std::string>(10, "megabite"));
-		map.insert(std::pair<int, std::string>(14, "megabite"));
 
+        map[1] = 42;
+        map[2] = 45;
+        map[45] = 65;
+        map[3] = 74;
 
         it = map.begin();
+        it++;
+
         ite = map.end();
 
-//        cit = map.begin();
+        map.erase(it, ite);
+//		std::cout << map[0] << std::endl;
 
-//        it = map.upper_bound(1);
 
 
 		map.print();
-        std::cout << "---------" << std::endl;
-		map.print();
-        map.clear();
+//        std::cout << "---------" << std::endl;
+//		map.print();
+//        map.clear();
 
 	}
 	std::cout << "--- std::map ---" << std::endl;
-	{
-        std::map<int, std::string> map;
+    {
+        std::map<int, int> map;
 
-        std::map<int, std::string>::iterator it;
-        std::map<int, std::string>::iterator ite;
+//		ft::map<int, int>::iterator it;
+//		ft::map<int, int>::const_iterator ite;
 
-        map.insert(std::pair<int, std::string>(8, "bite"));
-        map.insert(std::pair<int, std::string>(10, "octobite"));
-        map.insert(std::pair<int, std::string>(2, "gigabite"));
-        map.insert(std::pair<int, std::string>(1, "gigabite"));
-        map.insert(std::pair<int, std::string>(6, "nanobite"));
-        map.insert(std::pair<int, std::string>(12, "megabite"));
-        map.insert(std::pair<int, std::string>(10, "megabite"));
-        map.insert(std::pair<int, std::string>(14, "megabite"));
-
-
-        it = map.upper_bound(1);
-        std::cout << it->first << std::endl;
+        map[0] = 42;
+        map.erase(0);
+        std::cout << map[0] << std::endl;
 
 	}
 }

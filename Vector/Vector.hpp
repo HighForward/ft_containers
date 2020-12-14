@@ -18,7 +18,7 @@ namespace ft
 
 		public:
 			vectorIterator() {};
-			vectorIterator(T* current) : c(current) {};
+			vectorIterator(const T* current) : c(current) {};
 			vectorIterator(vectorIterator<T> const &x) : c(x.c) {};
 			~vectorIterator() {};
 
@@ -69,8 +69,6 @@ namespace ft
 			size_type _length;
 			size_type _capacity;
 			allocator_type allocator;
-
-		private :
 
 		class out_of_range : public std::exception
 		{
@@ -281,35 +279,6 @@ namespace ft
 				return (iterator(&at(i)));
 			}
 
-			void insert(iterator position, size_type n ,const value_type& val)
-			{
-				if (n > 0)
-				{
-					value_type temp[_length + n];
-					std::ptrdiff_t index = position - begin();
-					reserve(get_new_capacity(_length + n));
-					for (size_type x = 0; x < index; x++)
-						temp[x] = _c[x];
-					for (size_type x = index; x < size(); ++x)
-						temp[x + n] = _c[x];
-					for (size_type i = 0; i < n; i++)
-						temp[i + index] = val;
-					for (size_type i = 0; i < _length + n; i++)
-						_c[i] = temp[i];
-					_length += n;
-				}
-			}
-
-			void insert(iterator position, iterator first, iterator last)
-			{
-				iterator it = position;
-				while (first != last)
-				{
-					it = insert(it, *first);
-					it++;
-					first++;
-				}
-			}
 
 			iterator erase(iterator position)
 			{
@@ -330,19 +299,6 @@ namespace ft
 				for (size_type i = index; i != size(); i++)
 					_c[i] = _c[i + stop];
 				return (iterator(&_c[index]));
-			}
-
-			void swap(vector &x)
-			{
-				size_type temp_len = _length;
-				size_type temp_cap = _capacity;
-				pointer temp_c = _c;
-				_length = x._length;
-				_capacity = x._capacity;
-				_c = x._c;
-				x._length = temp_len;
-				x._capacity = temp_cap;
-				x._c = temp_c;
 			}
 
 			void clear()

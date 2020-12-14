@@ -114,11 +114,12 @@ namespace ft {
 
 	};
 
-	template<class Key, class T, class value_type>
+	template<class Key, class T>
 	class mapIterator
 	{
 		public:
 			typedef Node<Key, T> node_type;
+			typedef std::pair<Key, T> value_type;
 
 	    private:
 			node_type *node;
@@ -159,7 +160,7 @@ namespace ft {
 
 			mapIterator operator++(int)
             {
-			    mapIterator<Key, T, value_type>tmp = *this;
+			    mapIterator<Key, T>tmp = *this;
 			    operator++();
 			    return (tmp);
             }
@@ -187,17 +188,17 @@ namespace ft {
 
             mapIterator operator--(int)
             {
-                mapIterator<Key, T, value_type>tmp = *this;
+                mapIterator<Key, T>tmp = *this;
                 operator--();
                 return (tmp);
             }
 
-            bool operator!=(mapIterator<Key, T, value_type> const &rhs)
+            bool operator!=(mapIterator<Key, T> const &rhs)
             {
                 return (this->node != rhs.node);
             }
 
-            bool operator==(mapIterator<Key, T, value_type> const &rhs)
+            bool operator==(mapIterator<Key, T> const &rhs)
             {
                 return (this->node == rhs.node);
             }
@@ -223,7 +224,8 @@ namespace ft {
 			typedef std::pair<const key_type, mapped_type>	value_type;
 			typedef Compare 								key_compare;
 			typedef Alloc									allocator_type;
-			typedef mapIterator<key_type, mapped_type, value_type>		iterator;
+			typedef mapIterator<key_type, mapped_type>		iterator;
+//			typedef mapIterator<const key_type, const mapped_type> const_iterator;
 			typedef size_t 									size_type;
 			typedef Node<key_type, mapped_type>				node_type;
 
@@ -310,6 +312,14 @@ namespace ft {
 				return (iterator(tmp));
 			}
 
+//            mapIterator<const key_type, const mapped_type> begin() const
+//            {
+//                node_type *tmp = root;
+//                while (tmp->getLeft())
+//                    tmp = tmp->getLeft();
+//                return (const_iterator(tmp));
+//            }
+
 			/*const iterator begin() const*/
 
 			iterator end()
@@ -392,6 +402,7 @@ namespace ft {
             {
 
                 node_type *n = search_by_key((*position).first);
+                std::cout << (*position).first << std::endl;
                 if (n == NULL)
                     return ;
                 else if (_size == 1 && position == iterator(root))

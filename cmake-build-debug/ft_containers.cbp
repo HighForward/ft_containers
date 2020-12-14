@@ -90,6 +90,12 @@
 		<Unit filename="/home/user42/Bureau/projects/ft_containers/Map/main.cpp">
 			<Option target="ft_containers"/>
 		</Unit>
+		<Unit filename="/home/user42/Bureau/projects/ft_containers/Vector/test.hpp">
+			<Option target="ft_containers"/>
+		</Unit>
+		<Unit filename="/home/user42/Bureau/projects/ft_containers/main.cpp">
+			<Option target="ft_containers"/>
+		</Unit>
 		<Unit filename="/home/user42/Bureau/projects/ft_containers/CMakeLists.txt">
 			<Option virtualFolder="CMake Files\"/>
 		</Unit>
