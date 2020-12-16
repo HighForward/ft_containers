@@ -1,6 +1,9 @@
 #ifndef TEST_H
 #define TEST_H
 
+#include "../Vector.hpp"
+#include <vector>
+
 void 	print_info(ft::vector<int> &vec);
 void 	print_info(std::vector<int> &vec);
 void	print_vector(ft::vector<int>::iterator it, ft::vector<int>::iterator ite);

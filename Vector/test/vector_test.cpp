@@ -1,6 +1,6 @@
-#include "Vector.hpp"
 #include <iostream>
 #include <vector>
+#include "../Vector.hpp"
 #include "test.h"
 
 void 	print_info(ft::vector<int> &vec)
@@ -307,7 +307,7 @@ void ft_vector_push_pop()
 
 void std_vector_push_pop()
 {
-	std::cout << "\033[1;32mft::vector\033[0m\n";
+	std::cout << "\033[1;32mstd::vector\033[0m\n";
 	{
 		std::vector<int> vec(2, 10);
 		vec.push_back(15);

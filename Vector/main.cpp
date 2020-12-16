@@ -1,55 +1,56 @@
-//#include "Vector.hpp"
 #include <iostream>
 #include <vector>
-#include "test.hpp"
+#include "Vector.hpp"
 
 int main()
 {
-	std::cout << "\033[1;32mft::vector\033[0m\n";
-	{
-	    ft::vector<int> vec;
+    std::cout << "\033[1;32mft::vector\033[0m\n";
+    {
+        ft::vector<int> vec;
+        ft::vector<int>::iterator it;
+        ft::vector<int>::reverse_iterator rit;
+        ft::vector<int>::reverse_iterator rite;
 
-	    ft::vector<int>::iterator it;
-        ft::vector<int>::const_iterator c;
+        vec.push_back(13);
+//        vec.push_back(14);
+//        vec.push_back(15);
 
-        vec.push_back(100);
+        rit = vec.rbegin();
+        rite = vec.rend();
 
-        c = vec.begin();
-        it = vec.begin();
+//        ft::vector<int>::reverse_iterator rit = vec.rbegin();
 
-//        c.operator[](0) = 15;
-        it.operator[](0) = 15;
-
-        std::cout << c[0] << std::endl;
-        std::cout << it[0] << std::endl;
-
-//        std::cout << c[0] << std::endl;
-//        c[0] = 15;
-
-//        e.operator[](0) = 15;
+//        ritc.operator[](0) = 15;
+        std::cout << rit.operator[](0) << std::endl;
 
 
+        while (rit != rite)
+        {
+            std::cout << *rit << std::endl;
+            rit++;
+        }
 
-
-//	    vec[0] = 500;
-//	    it = vec.begin();
-
-
-//	    it.
-//	    std::cout << *e << std::endl;
-	}
-	std::cout << "\033[1;32mstd::vector\033[0m\n";
-	{
+    }
+    std::cout << "\033[1;32mstd::vector\033[0m\n";
+    {
         std::vector<int> vec;
+        std::vector<int>::reverse_iterator rit;
+        std::vector<int>::reverse_iterator rite;
 
-        std::vector<int>::iterator it;
-        std::vector<int>::const_iterator c;
+//        vec.push_back(13);
+//        vec.push_back(14);
+//        vec.push_back(15);
 
-        vec.push_back(100);
+        rit = vec.rbegin();
+        rite = vec.rend();
 
-        c = vec.begin();
-        it = vec.begin();
+        while (rit != rite)
+        {
+            std::cout << *rit << std::endl;
+            rit++;
+        }
 
-//        c.operator[](0) = 15;
-	}
+//        std::cout << *rit << std::endl;
+//        std::cout << *rite << std::endl;
+    }
 }

@@ -4,4 +4,4 @@ project(ft_containers)
 set(CMAKE_CXX_STANDARD 98)
 set (CMAKE_CXX_FLAGS "-Wall -Wextra -Werror -std=c++98")
 
-add_executable(ft_containers main.cpp Map/Map.hpp Map/main.cpp Vector/test.hpp)
+add_executable(ft_containers main.cpp Map/Map.hpp Map/main.cpp Vector/Vector.hpp)
