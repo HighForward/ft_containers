@@ -1,3 +1,6 @@
+#ifndef MAP_HPP
+#define MAP_HPP
+
 #include <iostream>
 #include <cstddef>
 #include <limits>
@@ -10,7 +13,7 @@ namespace ft {
 	template <class Key, class T>
 	class Node
 	{
-			typedef Node<Key, T>	node_type;
+        typedef Node<Key, T>	node_type;
 
 		private:
 			std::pair<Key, T> pair;
@@ -402,7 +405,6 @@ namespace ft {
             {
 
                 node_type *n = search_by_key((*position).first);
-                std::cout << (*position).first << std::endl;
                 if (n == NULL)
                     return ;
                 else if (_size == 1 && position == iterator(root))
@@ -457,13 +459,13 @@ namespace ft {
                 node_type *n;
                 if ((n = search_by_key(k)))
                     erase(iterator(n));
-                return (0);
+                return (n == NULL ? 0 : 1);
             }
 
             void erase(iterator first, iterator last)
             {
-                while (first != last)
-                    erase(first++);
+                    while (first != last)
+                        erase(first++);
             }
 
             void swap(map& x)
@@ -564,3 +566,5 @@ namespace ft {
 
 
 }
+
+#endif

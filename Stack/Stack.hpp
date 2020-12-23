@@ -18,7 +18,6 @@ namespace ft
         private:
             container_type _c;
 
-
         public:
             stack(const container_type& ctnr = container_type())
             {
@@ -42,7 +41,7 @@ namespace ft
 
             bool empty() const
             {
-                return (_c.size());
+                return (!_c.size());
             }
 
             value_type& top()
@@ -54,9 +53,37 @@ namespace ft
             {
                 return (_c.back());
             }
+
+            friend bool operator==(stack<T, Container> &lhs, stack<T, Container> &rhs)
+            {
+                return (lhs._c == rhs._c);
+            }
+
+            friend bool operator!=(stack<T, Container> &lhs, stack<T, Container> &rhs)
+            {
+                return (lhs._c != rhs._c);
+            }
+
+            friend bool operator<(stack<T, Container> &lhs, stack<T, Container> &rhs)
+            {
+                return (lhs._c < rhs._c);
+            }
+
+            friend bool operator<=(stack<T, Container> &lhs, stack<T, Container> &rhs)
+            {
+                return (lhs._c <= rhs._c);
+            }
+
+            friend bool operator>(stack<T, Container> &lhs, stack<T, Container> &rhs)
+            {
+                return (lhs._c > rhs._c);
+            }
+
+            friend bool operator>=(stack<T, Container> &lhs, stack<T, Container> &rhs)
+            {
+                return (lhs._c >= rhs._c);
+            }
     };
-
-
 }
 
 #endif

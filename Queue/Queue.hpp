@@ -64,6 +64,37 @@ namespace ft
             {
                 return (_c.back());
             }
+
+            friend bool operator==(queue<T, Container> &lhs, queue<T, Container> &rhs)
+            {
+                return (lhs._c == rhs._c);
+            }
+
+            friend bool operator>(queue<T, Container> &lhs, queue<T, Container> &rhs)
+            {
+                return (lhs._c > rhs._c);
+            }
+
+            friend bool operator>=(queue<T, Container> &lhs, queue<T, Container> &rhs)
+            {
+                return (lhs._c >= rhs._c);
+            }
+
+            friend bool operator<(queue<T, Container> &lhs, queue<T, Container> &rhs)
+            {
+                return (lhs._c < rhs._c);
+            }
+
+            friend bool operator<=(queue<T, Container> &lhs, queue<T, Container> &rhs)
+            {
+                return (lhs._c <= rhs._c);
+            }
+
+            friend bool operator!=(queue<T, Container> &lhs, queue<T, Container> &rhs)
+            {
+                return (lhs._c != rhs._c);
+            }
+
     };
 
 

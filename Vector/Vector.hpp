@@ -11,6 +11,7 @@
 namespace ft
 {
 
+    //IT
     template<class T>
     class ConstvectorIterator;
 
@@ -27,7 +28,7 @@ namespace ft
 
         public:
             vectorIterator() {};
-            vectorIterator(const pointer current) : c(current) {};
+            vectorIterator(pointer current) : c(current) {};
             vectorIterator(const vectorIterator<T> &x) : c(const_cast<pointer>(x.c)) {};
             ~vectorIterator() {};
 
@@ -65,7 +66,6 @@ namespace ft
             T *getPtr() const { return (this->c); }
     };
 
-
     template<class T>
     class ConstvectorIterator
     {
@@ -78,9 +78,9 @@ namespace ft
             typedef const T&      reference;
 
         public:
-            ConstvectorIterator() : c() {};
-            ConstvectorIterator(Pointer current) : c(current) {};
-            ConstvectorIterator(ConstvectorIterator<T> const &x) : c(const_cast<T*>(x.c)) {};
+            ConstvectorIterator() {};
+            ConstvectorIterator(T* current) : c(current) {};
+            ConstvectorIterator(ConstvectorIterator<T> const &x) : c(x.c) {};
             ~ConstvectorIterator() {};
 
             //cast
@@ -118,6 +118,7 @@ namespace ft
             T *getPtr() const { return (this->c); }
     };
 
+    //Reverse IT
     template<class T>
     class constReverseIterator;
 
@@ -152,7 +153,6 @@ namespace ft
 
             reference operator[](size_t n) { return *this->c; }
 
-
             //compare
             bool operator==(const reverseIterator<T> &rhs) { return (c == rhs.c); }
             bool operator!=(const reverseIterator<T> &rhs) { return (c != rhs.c); }
@@ -171,7 +171,6 @@ namespace ft
             reference operator*() { return (*this->c); }
             T *getPtr() const { return (this->c); }
     };
-
 
     template<class T>
     class constReverseIterator
@@ -290,12 +289,13 @@ namespace ft
                 _length = n;
             };
 
-            vector(const vector& x)
+            vector(vector<T>& rhs)
             {
-                _c = NULL;
-                _length = 0;
-                _capacity = 0;
-                assign(x.begin(), x.end());
+                _c = allocator.allocate(0);
+                this->allocator = rhs.allocator;
+                this->_capacity = 0;
+                this->_length = 0;
+                assign(rhs.begin(), rhs.end());
             }
 
             vector(iterator first, iterator last, const allocator_type& alloc = allocator_type())
@@ -304,6 +304,14 @@ namespace ft
                 _length = 0;
                 _capacity = 0;
                 assign(first, last);
+            }
+
+            vector& operator=(const vector<T>& rhs) {
+                assign(rhs.begin(), rhs.end());
+                this->_length = rhs._length;
+                this->_capacity = rhs._capacity;
+                this->allocator = rhs.allocator;
+                return (*this);
             }
 
             ~vector()
@@ -319,7 +327,8 @@ namespace ft
             const_iterator end() const { return (const_iterator(&_c[_length])); }
             reverse_iterator rbegin() { return (reverse_iterator(&_c[_length - 1])); }
             reverse_iterator rend() { return (reverse_iterator(&_c[0 - 1])); }
-
+            const_reverse_iterator rbegin() const { return (const_reverse_iterator(&_c[_length - 1])); }
+            const_reverse_iterator rend() const { return (const_reverse_iterator(&_c[0 - 1])); }
 
 
             // --- Capacity ---:
@@ -414,10 +423,20 @@ namespace ft
             }
 
 
-
-
             // --- Modifiers ---:
             void assign(iterator first, iterator last)
+            {
+                std::ptrdiff_t len = last - first;
+                size_type x = 0;
+
+                if (len > capacity())
+                    reserve(len);
+                for (iterator it = first; it != last; it++)
+                    _c[x++] = *it;
+                _length = x;
+            }
+
+            void assign(const_iterator first, const_iterator last)
             {
                 std::ptrdiff_t len = last - first;
                 size_type x = 0;
@@ -526,6 +545,57 @@ namespace ft
                 erase(begin(), end());
             }
     };
+
+    template<class T>
+    bool operator==(const vector<T> &lhs, const vector<T> &rhs)
+    {
+        if (lhs.size() != rhs.size())
+        { return (false); }
+        for (typename vector<T>::size_type i = 0; i < rhs.size(); ++i)
+        {
+            if (lhs[i] != rhs[i])
+            { return false; }
+        }
+        return (true);
+    }
+
+    template<class T>
+    bool operator<(const vector<T> &lhs, const vector<T> &rhs)
+    {
+        if (lhs.size() != rhs.size()) {
+            return (lhs.size() < rhs.size());
+        }
+        for (typename vector<T>::size_type i = 0; i < rhs.size(); ++i)
+        {
+            if (lhs[i] < rhs[i])
+            { return (true); }
+        }
+        return (false);
+    }
+
+    template<class T>
+    bool operator!=(const vector<T> &lhs, const vector<T> &rhs)
+    {
+        return (!(lhs == rhs));
+    }
+
+    template<class T>
+    bool operator>(const vector<T> &lhs, const vector<T> &rhs)
+    {
+        return (rhs < lhs);
+    }
+
+    template<class T>
+    bool operator<=(const vector<T> &lhs, const vector<T> &rhs)
+    {
+        return (!(rhs < lhs));
+    }
+
+    template<class T>
+    bool operator>=(const vector<T> &lhs, const vector<T> &rhs)
+    {
+        return (!(lhs < rhs));
+    }
 }
 
 #endif
