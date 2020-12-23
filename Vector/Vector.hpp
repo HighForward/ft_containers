@@ -45,7 +45,7 @@ namespace ft
             vectorIterator<T> &operator--() { c--; return (*this); }
             vectorIterator<T> operator--(int) { vectorIterator<T> temp = *this; c--; return (temp); }
 
-            reference operator[](size_t n) { return *c; }
+            reference operator[](size_t n) { return *(c + n); }
 
             //compare
             bool operator==(const vectorIterator<T> &rhs) { return (c == rhs.c); }
@@ -96,8 +96,7 @@ namespace ft
             ConstvectorIterator<T> &operator--() { c--; return (*this); }
             ConstvectorIterator<T> operator--(int) { ConstvectorIterator<T> temp = *this; c--; return (temp); }
 
-            reference operator[](size_t n) { return *this->c; }
-
+            reference operator[](size_t n) { return *(c + n); }
 
             //compare
             bool operator==(const ConstvectorIterator<T> &rhs) { return (c == rhs.c); }
@@ -151,7 +150,7 @@ namespace ft
             reverseIterator<T> &operator++() { c--; return (*this); }
             reverseIterator<T> operator++(int) { reverseIterator<T> temp = *this; c--; return (temp); }
 
-            reference operator[](size_t n) { return *this->c; }
+            reference operator[](size_t n) { return *(c + n); }
 
             //compare
             bool operator==(const reverseIterator<T> &rhs) { return (c == rhs.c); }
@@ -201,8 +200,7 @@ namespace ft
             constReverseIterator<T> &operator++() { c--; return (*this); }
             constReverseIterator<T> operator++(int) { constReverseIterator<T> temp = *this; c--; return (temp); }
 
-            reference operator[](size_t n) { return *this->c; }
-
+            reference operator[](size_t n) { return *(c + n); }
 
             //compare
             bool operator==(const constReverseIterator<T> &rhs) { return (c == rhs.c); }
@@ -222,8 +220,6 @@ namespace ft
             reference operator*() { return (*this->c); }
             T *getPtr() const { return (this->c); }
     };
-
-
 
     template<class T, class Alloc = std::allocator<T> >
     class vector
@@ -291,6 +287,7 @@ namespace ft
 
             vector(vector<T>& rhs)
             {
+
                 _c = allocator.allocate(0);
                 this->allocator = rhs.allocator;
                 this->_capacity = 0;
@@ -300,7 +297,8 @@ namespace ft
 
             vector(iterator first, iterator last, const allocator_type& alloc = allocator_type())
             {
-                _c = NULL;
+                allocator = alloc;
+                _c = allocator.allocate(0);
                 _length = 0;
                 _capacity = 0;
                 assign(first, last);
@@ -422,26 +420,13 @@ namespace ft
                 return (at(_length - 1));
             }
 
-
             // --- Modifiers ---:
             void assign(iterator first, iterator last)
             {
                 std::ptrdiff_t len = last - first;
                 size_type x = 0;
 
-                if (len > capacity())
-                    reserve(len);
-                for (iterator it = first; it != last; it++)
-                    _c[x++] = *it;
-                _length = x;
-            }
-
-            void assign(const_iterator first, const_iterator last)
-            {
-                std::ptrdiff_t len = last - first;
-                size_type x = 0;
-
-                if (len > capacity())
+                if (len > (long)capacity())
                     reserve(len);
                 for (iterator it = first; it != last; it++)
                     _c[x++] = *it;
@@ -476,14 +461,14 @@ namespace ft
                 return (iterator(&at(i)));
             }
 
-            void insert(iterator position, size_type n ,const value_type& val)
+            void insert(iterator position, size_type n, const value_type& val)
             {
                 if (n > 0)
                 {
                     value_type temp[_length + n];
                     std::ptrdiff_t index = position - begin();
                     reserve(get_new_capacity(_length + n));
-                    for (size_type x = 0; x < index; x++)
+                    for (long x = 0; x < index; x++)
                         temp[x] = _c[x];
                     for (size_type x = index; x < size(); ++x)
                         temp[x + n] = _c[x];
@@ -543,6 +528,11 @@ namespace ft
             void clear()
             {
                 erase(begin(), end());
+            }
+
+            allocator_type get_allocator() const
+            {
+                return (allocator);
             }
     };
 

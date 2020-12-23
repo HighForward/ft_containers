@@ -20,7 +20,7 @@ namespace ft
 			{
 			    c = T();
 			}
-			NodeList(const T &content) : c(content), next(NULL), prev(NULL) {}
+			NodeList(const T &content) : c(content), prev(NULL), next(NULL) {}
 			bool operator<(NodeList &rhs)
             {
 			    return (c < rhs.c);
