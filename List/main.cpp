@@ -1,10 +1,5 @@
 #include "List.hpp"
 #include <list>
-#include "../ft_containers-tester/Tester.hpp"
-//#include "../ft_containers-tester/Tester.hpp"
-//#include "../Tests/list.hpp"
-//#include "../ft_containers-tester/L"
-
 
 int main()
 {
@@ -20,9 +15,10 @@ int main()
 
         list = tsil;
 
-//        list.push_back(15);
-//        list.push_back(16);
-//        list.push_back(17);
+        list.push_back(15);
+        list.push_back(16);
+        list.push_back(17);
+
 
 
         rit = list.rbegin();

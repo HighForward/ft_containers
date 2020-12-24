@@ -1,175 +1,30 @@
 #ifndef LIST_HPP
 #define LIST_HPP
 
-
+#include "ListIterator.hpp"
 #include <iostream>
 #include <cstddef>
+#include <limits>
 #include <algorithm>
 
 namespace ft
 {
-	template<typename T>
-	class NodeList
-	{
-		public:
-			T c;
-			NodeList *prev;
-			NodeList *next;
-
-			NodeList()
-			{
-			    c = T();
-			}
-			NodeList(const T &content) : c(content), prev(NULL), next(NULL) {}
-			bool operator<(NodeList &rhs)
-            {
-			    return (c < rhs.c);
-            }
-	};
-
-    template<typename T>
-    class constListIterator;
-
-	template<typename T>
-	class listIterator
-	{
-        public:
-			NodeList<T>* _M_node;
-
-			listIterator() {}
-			listIterator(NodeList<T> *current) : _M_node(current) {}
-			listIterator(listIterator const *copy) : _M_node(copy->_M_node) {}
-			~listIterator() {}
-
-            operator constListIterator<T>() { return (constListIterator<T>(_M_node)); }
-            listIterator<T>(const constListIterator<T> &x) { this->_M_node = x._M_node; }
-            listIterator<T>& operator=(const constListIterator<T>& x) { this->_M_node = x._M_node; return (*this); }
-
-            listIterator& operator=(const listIterator<T> &rhs) { _M_node = rhs._M_node; return (*this); }
-
-            listIterator& operator++() { _M_node = _M_node->next; return (*this); }
-			listIterator operator++(int) { NodeList<T>* temp = _M_node; _M_node = _M_node->next; return (listIterator<T>(temp)); }
-			listIterator& operator--() { _M_node = _M_node->prev; return (*this); }
-			listIterator operator--(int) { NodeList<T>* temp = _M_node; _M_node = _M_node->prev; return (listIterator<T>(temp)); }
-
-			bool operator==(listIterator<T> const &rhs) { return (this->_M_node == rhs._M_node); }
-			bool operator!=(listIterator<T> const &rhs) { return (this->_M_node != rhs._M_node); }
-			T* operator->() { return (_M_node); }
-            T& operator*() { return (_M_node->c); }
-	};
-
-    template<typename T>
-    class constListIterator
-    {
-        public:
-            NodeList<T>* _M_node;
-
-            constListIterator() {}
-            constListIterator(NodeList<T> *current) : _M_node(current) {}
-            constListIterator(constListIterator const *copy) : _M_node(copy->_M_node) {}
-            ~constListIterator() {}
-
-            operator listIterator<T>() { return (listIterator<T>(_M_node)); }
-            constListIterator<T>(const listIterator<T> &x) { this->_M_node = x._M_node; }
-            constListIterator<T>& operator=(const listIterator<T>& x) { this->_M_node = x._M_node; return (*this); }
-
-            constListIterator& operator=(const constListIterator<T> &rhs) { _M_node = rhs._M_node; return (*this); }
-
-            constListIterator& operator++() { _M_node = _M_node->next; return (*this); }
-            constListIterator operator++(int) { NodeList<T>* temp = _M_node; _M_node = _M_node->next; return (constListIterator<T>(temp)); }
-            constListIterator& operator--() { _M_node = _M_node->prev; return (*this); }
-            constListIterator operator--(int) { NodeList<T>* temp = _M_node; _M_node = _M_node->prev; return (constListIterator<T>(temp)); }
-
-            bool operator==(constListIterator<T> const &rhs) { return (this->_M_node == rhs._M_node); }
-            bool operator!=(constListIterator<T> const &rhs) { return (this->_M_node != rhs._M_node); }
-            const T* operator->() { return (_M_node); }
-            const T& operator*() { return (_M_node->c); }
-    };
-
-
-    template<typename T>
-    class constReverseListIterator;
-    
-    template<typename T>
-    class reverseListIterator
-    {
-        public:
-            NodeList<T>* _M_node;
-
-            reverseListIterator() {}
-            reverseListIterator(NodeList<T> *current) : _M_node(current) {}
-            reverseListIterator(reverseListIterator const *copy) : _M_node(copy->_M_node) {}
-            ~reverseListIterator() {}
-
-            operator constReverseListIterator<T>() { return (constReverseListIterator<T>(_M_node)); }
-            reverseListIterator<T>(const constReverseListIterator<T> &x) { this->_M_node = x._M_node; }
-            reverseListIterator<T>& operator=(const constReverseListIterator<T>& x) { this->_M_node = x._M_node; return (*this); }
-
-            reverseListIterator& operator=(const reverseListIterator<T> &rhs) { _M_node = rhs._M_node; return (*this); }
-
-            reverseListIterator& operator++() { _M_node = _M_node->prev; return (*this); }
-            reverseListIterator operator++(int) { NodeList<T>* temp = _M_node; _M_node = _M_node->prev; return (reverseListIterator<T>(temp)); }
-            reverseListIterator& operator--() { _M_node = _M_node->next; return (*this); }
-            reverseListIterator operator--(int) { NodeList<T>* temp = _M_node; _M_node = _M_node->next ; return (reverseListIterator<T>(temp)); }
-
-            bool operator==(reverseListIterator<T> const &rhs) { return (this->_M_node == rhs._M_node); }
-            bool operator!=(reverseListIterator<T> const &rhs) { return (this->_M_node != rhs._M_node); }
-            T* operator->() { return (_M_node); }
-            T& operator*() { return (_M_node->c); }
-    };
-
-    
-    template<typename T>
-    class constReverseListIterator
-    {
-        public:
-            NodeList<T>* _M_node;
-
-            constReverseListIterator() {}
-            constReverseListIterator(NodeList<T> *current) : _M_node(current) {}
-            constReverseListIterator(constReverseListIterator const *copy) : _M_node(copy->_M_node) {}
-            ~constReverseListIterator() {}
-
-            operator reverseListIterator<T>() { return (reverseListIterator<T>(_M_node)); }
-            constReverseListIterator<T>(const reverseListIterator<T> &x) { this->_M_node = x._M_node; }
-            constReverseListIterator<T>& operator=(const reverseListIterator<T>& x) { this->_M_node = x._M_node; return (*this); }
-
-
-            constReverseListIterator& operator=(const constReverseListIterator<T> &rhs) { _M_node = rhs._M_node; return (*this); }
-
-            constReverseListIterator& operator++() { _M_node = _M_node->prev; return (*this); }
-            constReverseListIterator operator++(int) { NodeList<T>* temp = _M_node; _M_node = _M_node->prev; return (constReverseListIterator<T>(temp)); }
-            constReverseListIterator& operator--() { _M_node = _M_node->next; return (*this); }
-            constReverseListIterator operator--(int) { NodeList<T>* temp = _M_node; _M_node = _M_node->next ; return (constReverseListIterator<T>(temp)); }
-
-            bool operator==(constReverseListIterator<T> const &rhs) { return (this->_M_node == rhs._M_node); }
-            bool operator!=(constReverseListIterator<T> const &rhs) { return (this->_M_node != rhs._M_node); }
-            const T* operator->() { return (_M_node); }
-            const T& operator*() { return (_M_node->c); }
-    };
-    
-    
-    
-    
 	template<class T, class Alloc = std::allocator<T> >
 	class list
 	{
 		public:
 			typedef T value_type;
 			typedef T *pointer;
-			typedef const T *const_pointer;
 			typedef T &reference;
-
-			typedef const T &const_reference;
-			typedef Alloc allocator_type;
-			typedef std::ptrdiff_t difference_type;
-
-			typedef listIterator<T> iterator;
-			typedef constListIterator<T> const_iterator;
-			typedef reverseListIterator<T> reverse_iterator;
+            typedef const T *const_pointer;
+            typedef const T &const_reference;
+            typedef std::ptrdiff_t difference_type;
+            typedef size_t size_type;
+            typedef Alloc allocator_type;
+            typedef listIterator<T> iterator;
+            typedef constListIterator<T> const_iterator;
+            typedef reverseListIterator<T> reverse_iterator;
 			typedef constReverseListIterator<T> const_reverse_iterator;
-
-			typedef size_t size_type;
 
 		private:
 			typedef struct	s_list
@@ -180,8 +35,8 @@ namespace ft
 			}				t_list;
 
 			t_list _list;
-			allocator_type _allocator;
 			size_type _length;
+            allocator_type _allocator;
 
             template<typename Type>
             void swap(Type &l, Type &r)
@@ -233,6 +88,22 @@ namespace ft
 				    push_back(val);
 			}
 
+			list(iterator first, iterator last, const allocator_type &alloc = allocator_type())
+            {
+                _allocator = alloc;
+                _length = 0;
+                init();
+                assign(first, last);
+            }
+
+            list (const list& x)
+            {
+                _allocator = x._allocator;
+                _length = 0;
+                init();
+                assign(x.begin(), x.end());
+            }
+
 			~list()
 			{
 				NodeList<T> *remove;
@@ -248,7 +119,6 @@ namespace ft
 				delete _list.past_end;
 			}
 
-			//operator=
 			list<T>& operator=(const list<T>& rhs)
             {
                 _length = 0;
@@ -323,8 +193,7 @@ namespace ft
 
 			size_type max_size() const
 			{
-				//to_do;
-				return (0);
+                return std::numeric_limits<std::size_t>::max() / (sizeof(ft::list<value_type>) - sizeof(pointer));
 			}
 
 			//Element access
@@ -448,7 +317,6 @@ namespace ft
 
 			void insert(iterator position, iterator first, iterator last)
 			{
-
                 for (iterator it = first; it != last; it++)
                     insert(position, *it);
 			}
@@ -505,6 +373,24 @@ namespace ft
             }
 
             //Operations
+            void splice (iterator position, list& x)
+            {
+                insert(position, x.begin(), x.end());
+                x.clear();
+            }
+
+            void splice (iterator position, list& x, iterator i)
+            {
+                insert(position, *i);
+                x.erase(i);
+            }
+
+            void splice (iterator position, list& x, iterator first, iterator last)
+            {
+                insert(position, first, last);
+                x.erase(first, last);
+            }
+
             void remove(const value_type& val)
             {
                 for (iterator it = begin(); it != end(); it++)
@@ -524,6 +410,24 @@ namespace ft
                 }
             }
 
+            void merge (list& x)
+            {
+                if (&x == this)
+                    return ;
+                insert(this->begin(), x.begin(), x.end());
+                sort();
+                x.clear();
+            }
+
+            template<class Compare>
+            void merge (list& x, Compare comp)
+            {
+                if (&x == this)
+                    return ;
+                insert(this->begin(), x.begin(), x.end());
+                sort(comp);
+                x.clear();
+            }
 
             void unique()
             {
@@ -543,8 +447,6 @@ namespace ft
                     begin++;
                 }
             }
-
-
 
             template <class BinaryPredicate>
             void unique(BinaryPredicate binary_pred)
@@ -617,41 +519,9 @@ namespace ft
                 }
             }
 
-            void splice (iterator position, list& x)
+            allocator_type get_allocator() const
             {
-                insert(position, x.begin(), x.end());
-                x.clear();
-            }
-
-            void splice (iterator position, list& x, iterator i)
-            {
-                insert(position, *i);
-                x.erase(i);
-            }
-
-            void splice (iterator position, list& x, iterator first, iterator last)
-            {
-                insert(position, first, last);
-                x.erase(first, last);
-            }
-
-            void merge (list& x)
-            {
-                if (&x == this)
-                    return ;
-                insert(this->begin(), x.begin(), x.end());
-                sort();
-                x.clear();
-            }
-
-            template<class Compare>
-            void merge (list& x, Compare comp)
-            {
-                if (&x == this)
-                    return ;
-                insert(this->begin(), x.begin(), x.end());
-                sort(comp);
-                x.clear();
+                return (_allocator);
             }
 	};
 
