@@ -18,7 +18,6 @@ namespace ft
         private:
             container_type _c;
 
-
         public:
             queue(const container_type& ctnr = container_type())
             {
@@ -94,10 +93,7 @@ namespace ft
             {
                 return (lhs._c != rhs._c);
             }
-
     };
-
-
 }
 
 #endif

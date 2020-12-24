@@ -82,16 +82,13 @@
 				</MakeCommands>
 			</Target>
 		</Build>
-		<Unit filename="/mnt/c/Users/m4xdo/OneDrive/Bureau/ft_containers/List/List.hpp">
+		<Unit filename="/mnt/c/Users/m4xdo/OneDrive/Bureau/ft_containers/Map/MapIterator.hpp">
 			<Option target="ft_containers"/>
 		</Unit>
-		<Unit filename="/mnt/c/Users/m4xdo/OneDrive/Bureau/ft_containers/List/ListIterator.hpp">
+		<Unit filename="/mnt/c/Users/m4xdo/OneDrive/Bureau/ft_containers/Map/MapRemake.hpp">
 			<Option target="ft_containers"/>
 		</Unit>
-		<Unit filename="/mnt/c/Users/m4xdo/OneDrive/Bureau/ft_containers/List/main.cpp">
-			<Option target="ft_containers"/>
-		</Unit>
-		<Unit filename="/mnt/c/Users/m4xdo/OneDrive/Bureau/ft_containers/Vector/VectorIterator.hpp">
+		<Unit filename="/mnt/c/Users/m4xdo/OneDrive/Bureau/ft_containers/Map/main.cpp">
 			<Option target="ft_containers"/>
 		</Unit>
 		<Unit filename="/mnt/c/Users/m4xdo/OneDrive/Bureau/ft_containers/CMakeLists.txt">

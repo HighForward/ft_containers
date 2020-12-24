@@ -123,32 +123,32 @@ ft_containers/fast:
 	$(MAKE) -f CMakeFiles/ft_containers.dir/build.make CMakeFiles/ft_containers.dir/build
 .PHONY : ft_containers/fast
 
-List/main.o: List/main.cpp.o
+Map/main.o: Map/main.cpp.o
 
-.PHONY : List/main.o
+.PHONY : Map/main.o
 
 # target to build an object file
-List/main.cpp.o:
-	$(MAKE) -f CMakeFiles/ft_containers.dir/build.make CMakeFiles/ft_containers.dir/List/main.cpp.o
-.PHONY : List/main.cpp.o
+Map/main.cpp.o:
+	$(MAKE) -f CMakeFiles/ft_containers.dir/build.make CMakeFiles/ft_containers.dir/Map/main.cpp.o
+.PHONY : Map/main.cpp.o
 
-List/main.i: List/main.cpp.i
+Map/main.i: Map/main.cpp.i
 
-.PHONY : List/main.i
+.PHONY : Map/main.i
 
 # target to preprocess a source file
-List/main.cpp.i:
-	$(MAKE) -f CMakeFiles/ft_containers.dir/build.make CMakeFiles/ft_containers.dir/List/main.cpp.i
-.PHONY : List/main.cpp.i
+Map/main.cpp.i:
+	$(MAKE) -f CMakeFiles/ft_containers.dir/build.make CMakeFiles/ft_containers.dir/Map/main.cpp.i
+.PHONY : Map/main.cpp.i
 
-List/main.s: List/main.cpp.s
+Map/main.s: Map/main.cpp.s
 
-.PHONY : List/main.s
+.PHONY : Map/main.s
 
 # target to generate assembly for a file
-List/main.cpp.s:
-	$(MAKE) -f CMakeFiles/ft_containers.dir/build.make CMakeFiles/ft_containers.dir/List/main.cpp.s
-.PHONY : List/main.cpp.s
+Map/main.cpp.s:
+	$(MAKE) -f CMakeFiles/ft_containers.dir/build.make CMakeFiles/ft_containers.dir/Map/main.cpp.s
+.PHONY : Map/main.cpp.s
 
 # Help Target
 help:
@@ -159,9 +159,9 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
 	@echo "... ft_containers"
-	@echo "... List/main.o"
-	@echo "... List/main.i"
-	@echo "... List/main.s"
+	@echo "... Map/main.o"
+	@echo "... Map/main.i"
+	@echo "... Map/main.s"
 .PHONY : help
 
 

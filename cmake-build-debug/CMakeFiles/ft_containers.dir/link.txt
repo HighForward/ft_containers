@@ -1,1 +1,1 @@
-/usr/bin/c++  -std=c++98 -g   CMakeFiles/ft_containers.dir/List/main.cpp.o  -o ft_containers 
+/usr/bin/c++  -std=c++98 -g   CMakeFiles/ft_containers.dir/Map/main.cpp.o  -o ft_containers 
