@@ -90,55 +90,35 @@ namespace ft
             typedef Node<Key, T> node_type;
             typedef std::pair<const Key, T> value_type;
 
-        private:
-            node_type *node;
+            node_type *_M_node;
 
         public:
-            mapIterator() : node() {}
-            mapIterator(node_type *n) : node(n) {}
-            mapIterator(const mapIterator &i) { this->node = i.node; }
+            mapIterator() : _M_node() {}
+            mapIterator(node_type *n) : _M_node(n) {}
+            mapIterator(const mapIterator &i) { this->_M_node = i._M_node; }
 
-            mapIterator(const constMapIterator<Key, T> &x)
-            {
-                this->node = x.node;
-            }
-
-            mapIterator &operator=(const constMapIterator<Key, T> &x)
-            {
-                this->node = x.node;
-                return (*this);
-            }
-
-            operator constMapIterator<Key, T>()
-            {
-                return (ConstIterator(this->node));
-            }
-
-
-
-            mapIterator& operator=(const mapIterator &copy)
-            {
-                this->node = copy.node;
-                return *this;
-            }
+            mapIterator(const constMapIterator<Key, T> &x) { this->_M_node = x._M_node; }
+            operator constMapIterator<Key, T>() { return (ConstIterator(this->_M_node)); }
+            mapIterator &operator=(const constMapIterator<Key, T> &x) { this->_M_node = x._M_node; return (*this); }
+            mapIterator& operator=(const mapIterator &copy) { this->_M_node = copy._M_node; return *this; }
 
             mapIterator& operator++()
             {
-                if (node->getRight())
+                if (_M_node->getRight())
                 {
-                    node = node->getRight();
-                    while (node->getLeft())
-                        node = node->getLeft();
+                    _M_node = _M_node->getRight();
+                    while (_M_node->getLeft())
+                        _M_node = _M_node->getLeft();
                 }
                 else
                 {
                     node_type *tmp;
                     do
                     {
-                        tmp = node;
-                        node = node->getParent();
+                        tmp = _M_node;
+                        _M_node = _M_node->getParent();
                     }
-                    while (node && tmp == node->getRight());
+                    while (_M_node && tmp == _M_node->getRight());
                 }
                 return (*this);
             }
@@ -152,21 +132,21 @@ namespace ft
 
             mapIterator& operator--()
             {
-                if (node->getLeft())
+                if (_M_node->getLeft())
                 {
-                    node = node->getLeft();
-                    while (node && node->getRight())
-                        node = node->getRight();
+                    _M_node = _M_node->getLeft();
+                    while (_M_node && _M_node->getRight())
+                        _M_node = _M_node->getRight();
                 }
                 else
                 {
                     node_type *tmp;
                     do
                     {
-                        tmp = node;
-                        node = node->getParent();
+                        tmp = _M_node;
+                        _M_node = _M_node->getParent();
                     }
-                    while (node && tmp == node->getLeft());
+                    while (_M_node && tmp == _M_node->getLeft());
                 }
                 return (*this);
             }
@@ -178,15 +158,15 @@ namespace ft
                 return (tmp);
             }
 
-            value_type operator*() { return (node->getPair()); }
-            value_type* operator->() { return (&node->getPair()); }
+            value_type operator*() { return (_M_node->getPair()); }
+            value_type* operator->() { return (&_M_node->getPair()); }
 
-            bool operator!=(mapIterator<Key, T> const &rhs) { return (this->node != rhs.node); }
-            bool operator==(mapIterator<Key, T> const &rhs) { return (this->node == rhs.node); }
-            bool operator<(const mapIterator &rhs) const { return node < rhs.node; }
-            bool operator>(const mapIterator &rhs) const { return node > rhs.node; }
-            bool operator<=(const mapIterator &rhs) const { return node >= rhs.node; }
-            bool operator>=(const mapIterator &rhs) const { return node <= rhs.node; }
+            bool operator!=(mapIterator<Key, T> const &rhs) { return (this->_M_node != rhs._M_node); }
+            bool operator==(mapIterator<Key, T> const &rhs) { return (this->_M_node == rhs._M_node); }
+            bool operator<(const mapIterator &rhs) const { return _M_node < rhs._M_node; }
+            bool operator>(const mapIterator &rhs) const { return _M_node > rhs._M_node; }
+            bool operator<=(const mapIterator &rhs) const { return _M_node >= rhs._M_node; }
+            bool operator>=(const mapIterator &rhs) const { return _M_node <= rhs._M_node; }
     };
 
 
@@ -197,37 +177,35 @@ namespace ft
             typedef Node<Key, T> node_type;
             typedef std::pair<const Key, T> value_type;
 
-        private:
-            node_type *node;
+            node_type *_M_node;
 
         public:
-            constMapIterator() : node() {}
-            constMapIterator(node_type *n) : node(n) {}
-            constMapIterator(const constMapIterator &i) { this->node = i.node; }
+            constMapIterator() : _M_node() {}
+            constMapIterator(node_type *n) : _M_node(n) {}
+            constMapIterator(const constMapIterator &i) { this->_M_node = i._M_node; }
 
-            constMapIterator(const mapIterator<Key, T> &x) { this->node = x.node; }
-            operator mapIterator<Key, T>() { return (mapIterator<Key, T>(this->node)); }
-            constMapIterator &operator=(const mapIterator<Key, T> &x) { this->node = x.node; return (*this); }
-
-            constMapIterator& operator=(const constMapIterator &copy) { this->node = copy.node; return (*this); }
+            constMapIterator(const mapIterator<Key, T> &x) { this->_M_node = x._M_node; }
+            operator mapIterator<Key, T>() { return (mapIterator<Key, T>(this->_M_node)); }
+            constMapIterator& operator=(const mapIterator<Key, T> &x) { this->_M_node = x._M_node; return (*this); }
+            constMapIterator& operator=(const constMapIterator &x) { this->_M_node = x._M_node; return (*this); }
 
             constMapIterator& operator++()
             {
-                if (node->getRight())
+                if (_M_node->getRight())
                 {
-                    node = node->getRight();
-                    while (node->getLeft())
-                        node = node->getLeft();
+                    _M_node = _M_node->getRight();
+                    while (_M_node->getLeft())
+                        _M_node = _M_node->getLeft();
                 }
                 else
                 {
                     node_type *tmp;
                     do
                     {
-                        tmp = node;
-                        node = node->getParent();
+                        tmp = _M_node;
+                        _M_node = _M_node->getParent();
                     }
-                    while (node && tmp == node->getRight());
+                    while (_M_node && tmp == _M_node->getRight());
                 }
                 return (*this);
             }
@@ -241,21 +219,21 @@ namespace ft
 
             constMapIterator& operator--()
             {
-                if (node->getLeft())
+                if (_M_node->getLeft())
                 {
-                    node = node->getLeft();
-                    while (node && node->getRight())
-                        node = node->getRight();
+                    _M_node = _M_node->getLeft();
+                    while (_M_node && _M_node->getRight())
+                        _M_node = _M_node->getRight();
                 }
                 else
                 {
                     node_type *tmp;
                     do
                     {
-                        tmp = node;
-                        node = node->getParent();
+                        tmp = _M_node;
+                        _M_node = _M_node->getParent();
                     }
-                    while (node && tmp == node->getLeft());
+                    while (_M_node && tmp == _M_node->getLeft());
                 }
                 return (*this);
             }
@@ -267,18 +245,105 @@ namespace ft
                 return (tmp);
             }
 
-            const value_type operator*() { return (node->getPair()); }
-            const value_type* operator->() { return (&node->getPair()); }
+            const value_type operator*() { return (_M_node->getPair()); }
+            const value_type* operator->() { return (&_M_node->getPair()); }
 
-            bool operator!=(constMapIterator<Key, T> const &rhs) { return (this->node != rhs.node); }
-            bool operator==(constMapIterator<Key, T> const &rhs) { return (this->node == rhs.node); }
-            bool operator<(const constMapIterator &rhs) const { return node < rhs.node; }
-            bool operator>(const constMapIterator &rhs) const { return node > rhs.node; }
-            bool operator<=(const constMapIterator &rhs) const { return node >= rhs.node; }
-            bool operator>=(const constMapIterator &rhs) const { return node <= rhs.node; }
+            bool operator!=(constMapIterator<Key, T> const &rhs) { return (this->_M_node != rhs._M_node); }
+            bool operator==(constMapIterator<Key, T> const &rhs) { return (this->_M_node == rhs._M_node); }
+            bool operator<(const constMapIterator &rhs) const { return _M_node < rhs._M_node; }
+            bool operator>(const constMapIterator &rhs) const { return _M_node > rhs._M_node; }
+            bool operator<=(const constMapIterator &rhs) const { return _M_node >= rhs._M_node; }
+            bool operator>=(const constMapIterator &rhs) const { return _M_node <= rhs._M_node; }
     };
 
+    template<class Key, class T>
+    class reverseMapIterator
+    {
+        public:
+            typedef Node<Key, T> node_type;
+            typedef std::pair<const Key, T> value_type;
 
+            node_type *_M_node;
+
+        public:
+            reverseMapIterator() : _M_node() {}
+            reverseMapIterator(node_type *n) : _M_node(n) {}
+            reverseMapIterator(const reverseMapIterator &i) { this->_M_node = i._M_node; }
+
+//            reverseMapIterator(const constMapIterator<Key, T> &x) { this->_M_node = x._M_node; }
+//            operator constMapIterator<Key, T>() { return (ConstIterator(this->_M_node)); }
+//            mapIterator &operator=(const constMapIterator<Key, T> &x) { this->_M_node = x._M_node; return (*this); }
+            reverseMapIterator& operator=(const reverseMapIterator &copy) { this->_M_node = copy._M_node; return *this; }
+
+            reverseMapIterator& operator--()
+            {
+                if (_M_node->getRight())
+                {
+                    _M_node = _M_node->getRight();
+                    while (_M_node->getLeft())
+                        _M_node = _M_node->getLeft();
+                }
+                else
+                {
+                    node_type *tmp;
+                    do
+                    {
+                        tmp = _M_node;
+                        _M_node = _M_node->getParent();
+                    }
+                    while (_M_node && tmp == _M_node->getRight());
+                }
+                return (*this);
+            }
+
+            reverseMapIterator operator--(int)
+            {
+                mapIterator<Key, T>tmp = *this;
+                operator--();
+                return (tmp);
+            }
+
+            reverseMapIterator& operator++()
+            {
+
+                if ()
+
+                if (_M_node->getLeft())
+                {
+                    _M_node = _M_node->getLeft();
+                    while (_M_node && _M_node->getRight())
+                        _M_node = _M_node->getRight();
+                }
+                else
+                {
+                    node_type *tmp;
+                    do
+                    {
+                        tmp = _M_node;
+                        _M_node = _M_node->getParent();
+                    }
+                    while (_M_node && tmp == _M_node->getLeft());
+                }
+                return (*this);
+            }
+
+            reverseMapIterator operator++(int)
+            {
+                reverseMapIterator<Key, T>tmp = *this;
+                operator++();
+                return (tmp);
+            }
+
+            value_type operator*() { return (_M_node->getPair()); }
+            value_type* operator->() { return (&_M_node->getPair()); }
+
+            bool operator!=(reverseMapIterator<Key, T> const &rhs) { return (this->_M_node != rhs._M_node); }
+            bool operator==(reverseMapIterator<Key, T> const &rhs) { return (this->_M_node == rhs._M_node); }
+            bool operator<(const reverseMapIterator &rhs) const { return _M_node < rhs._M_node; }
+            bool operator>(const reverseMapIterator &rhs) const { return _M_node > rhs._M_node; }
+            bool operator<=(const reverseMapIterator &rhs) const { return _M_node >= rhs._M_node; }
+            bool operator>=(const reverseMapIterator &rhs) const { return _M_node <= rhs._M_node; }
+    };
 }
 
 

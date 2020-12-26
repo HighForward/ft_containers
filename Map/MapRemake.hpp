@@ -24,6 +24,7 @@ namespace ft
 
             typedef mapIterator <key_type, mapped_type> iterator;
 			typedef constMapIterator<key_type, mapped_type> const_iterator;
+			typedef reverseMapIterator<key_type, mapped_type> reverse_iterator;
             typedef size_t size_type;
             typedef std::ptrdiff_t difference_type;
             typedef Node<key_type, mapped_type> node_type;
@@ -176,6 +177,19 @@ namespace ft
                 while (tmp->getLeft())
                     tmp = tmp->getLeft();
                 return (const_iterator(tmp));
+            }
+
+            reverse_iterator rbegin()
+            {
+                return (reverse_iterator(root->getParent()));
+            }
+
+            reverse_iterator rend()
+            {
+                node_type *tmp = root;
+                while (tmp->getLeft())
+                    tmp = tmp->getLeft();
+                return (reverse_iterator(tmp));
             }
 
             iterator end()
@@ -357,7 +371,13 @@ namespace ft
                 return (end());
             }
 
-            //const iterator find(const key_type &k)
+            const_iterator find(const key_type &k) const
+            {
+                node_type *n;
+                if ((n = search_by_key(k)))
+                    return (const_iterator(n));
+                return (end());
+            }
 
             size_type count(const key_type &k) const
             {
@@ -376,7 +396,15 @@ namespace ft
                 return end();
             }
 
-//            const_iterator lower_bound (const key_type& k) const;
+            const_iterator lower_bound(const key_type& k) const
+            {
+                for (const_iterator it = begin(); it != end(); it++)
+                {
+                    if (!_compare((*it).first, k))
+                        return (it);
+                }
+                return end();
+            }
 
             iterator upper_bound(const key_type& k)
             {
@@ -388,14 +416,25 @@ namespace ft
                 return end();
             }
 
-//            const_iterator upper_bound (const key_type& k) const;
+            const_iterator upper_bound(const key_type& k) const
+            {
+                for (const_iterator it = begin(); it != end(); it++)
+                {
+                    if (_compare(k, (*it).first))
+                        return (it);
+                }
+                return end();
+            }
 
             std::pair<iterator, iterator> equal_range(const key_type &k)
             {
                 return (std::pair<iterator, iterator>(lower_bound(k), upper_bound(k)));
             }
 
-//            pair<const_iterator,const_iterator> equal_range (const key_type& k) const;
+            std::pair<const_iterator, const_iterator> equal_range(const key_type &k) const
+            {
+                return (std::pair<const_iterator, const_iterator>(lower_bound(k), upper_bound(k)));
+            }
 
             allocator_type get_allocator() const
             {

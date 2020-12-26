@@ -9,29 +9,45 @@ int main()
 	std::cout << "--- ft::map ---" <<std::endl;
 	{
 
-        ft::map<int, int>::iterator it;
-        ft::map<int, int>::const_iterator cit;
+//        ft::map<int, int>::iterator it;
         ft::map<int, int> map;
 
         map.insert(std::pair<int, int>(15, 15));
-        ft::map<int, int>::iterator ite;
+        map.insert(std::pair<int, int>(13, 13));
+        map.insert(std::pair<int, int>(2, 2));
 
-        cit = map.begin();
+        ft::map<int, int>::reverse_iterator it;
+        ft::map<int, int>::reverse_iterator ite;
 
-        std::cout << it->second << std::endl;
+
+        it = map.rbegin();
+        ite = map.rend();
+
+        while (it != ite)
+        {
+            std::cout << it->first << " " << it->second << std::endl;
+            it++;
+        }
     }
 	std::cout << "--- std::map ---" << std::endl;
     {
-        std::map<int, int>::iterator it;
-        std::map<int, int>::const_iterator cit;
         std::map<int, int> map;
 
         map.insert(std::pair<int, int>(15, 15));
-        std::map<int, int>::iterator ite;
+        map.insert(std::pair<int, int>(13, 13));
+        map.insert(std::pair<int, int>(2, 2));
 
-        cit = map.begin();
+        std::map<int, int>::reverse_iterator it;
+        std::map<int, int>::reverse_iterator ite;
 
 
-        std::cout << cit->second << std::endl;
+        it = map.rbegin();
+        ite = map.rend();
+
+        while (it != ite)
+        {
+            std::cout << it->first << " " << it->second << std::endl;
+            it++;
+        }
 	}
 }

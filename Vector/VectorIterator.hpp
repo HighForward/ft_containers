@@ -9,10 +9,9 @@ namespace ft
     template<class T>
     class vectorIterator
     {
-        private:
+        public:
             T* c;
 
-        public:
             typedef T*      pointer;
             typedef T&      reference;
 
@@ -52,10 +51,9 @@ namespace ft
     class ConstvectorIterator
     {
 
-        private:
+        public:
             T* c;
 
-        public:
             typedef const T* Pointer;
             typedef const T&      reference;
 
@@ -67,8 +65,8 @@ namespace ft
 
             operator vectorIterator<T>() { return (vectorIterator<T>(this->c)); }
             ConstvectorIterator(const vectorIterator<T> &x) { this->c = x.c; }
-            ConstvectorIterator<T>& operator=(const vectorIterator<T> &x) { this->c = x.getPtr(); return (*this); }
-            ConstvectorIterator<T>& operator=(const ConstvectorIterator<T> &rhs) { this->c = rhs.c; return (*this); }
+            ConstvectorIterator<T>& operator=(const vectorIterator<T> &x) { this->c = x.c; return (*this); }
+            ConstvectorIterator<T>& operator=(const ConstvectorIterator<T> &x) { this->c = x.c; return (*this); }
 
             ConstvectorIterator<T> &operator++() { c++; return (*this); }
             ConstvectorIterator<T> operator++(int) { ConstvectorIterator<T> temp = *this; c++; return (temp); }
@@ -97,10 +95,9 @@ namespace ft
     template<class T>
     class reverseIterator
     {
-        private:
+        public:
             T* c;
 
-        public:
             typedef T* Pointer;
             typedef T&      reference;
 
@@ -112,8 +109,8 @@ namespace ft
 
             operator reverseIterator<T>() { return (constReverseIterator<T>(this->c)); }
             reverseIterator(const constReverseIterator<T> &x) { this->c = x.c; }
-            reverseIterator<T>& operator=(const constReverseIterator<T> &x) { this->c = x.getPtr(); return (*this); }
-            reverseIterator<T>& operator=(const reverseIterator<T> &rhs) { this->c = rhs.c; return (*this); }
+            reverseIterator<T>& operator=(const constReverseIterator<T> &x) { this->c = x.c; return (*this); }
+            reverseIterator<T>& operator=(const reverseIterator<T> &x) { this->c = x.c; return (*this); }
 
             reverseIterator<T> &operator--() { c++; return (*this); }
             reverseIterator<T> operator--(int) { reverseIterator<T> temp = *this; c++; return (temp); }
@@ -139,10 +136,9 @@ namespace ft
     template<class T>
     class constReverseIterator
     {
-        private:
+        public:
             T* c;
 
-        public:
             typedef const T*        Pointer;
             typedef const T&        reference;
 
@@ -154,8 +150,8 @@ namespace ft
 
             operator constReverseIterator<T>() { return (reverseIterator<T>(this->c)); }
             constReverseIterator(const reverseIterator<T> &x) { this->c = x.getPtr(); }
-            constReverseIterator<T>& operator=(const reverseIterator<T> &x) { this->c = x.getPtr(); return (*this); }
-            constReverseIterator<T>& operator=(const constReverseIterator<T> &rhs) { this->c = rhs.c; return (*this); }
+            constReverseIterator<T>& operator=(const reverseIterator<T> &x) { this->c = x.c; return (*this); }
+            constReverseIterator<T>& operator=(const constReverseIterator<T> &x) { this->c = x.c; return (*this); }
 
             constReverseIterator<T> &operator--() { c++; return (*this); }
             constReverseIterator<T> operator--(int) { constReverseIterator<T> temp = *this; c++; return (temp); }

@@ -10,9 +10,10 @@ int main()
         ft::vector<int> fifth (myints, myints + sizeof(myints) / sizeof(int) );
         std::cout << *fifth.begin() << std::endl;
 
-        ft::vector<int>::iterator it;
+        ft::vector<int>::const_iterator it;
 
         it = fifth.begin();
+
     }
     std::cout << "\033[1;32mstd::vector\033[0m\n";
     {
