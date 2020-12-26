@@ -76,7 +76,6 @@ namespace ft
 
             vector(vector<T>& rhs)
             {
-
                 _c = allocator.allocate(0);
                 this->allocator = rhs.allocator;
                 this->_capacity = 0;

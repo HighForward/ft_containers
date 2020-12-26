@@ -23,7 +23,7 @@ namespace ft
             typedef const value_type* const_pointer;
 
             typedef mapIterator <key_type, mapped_type> iterator;
-//			typedef mapIterator<const key_type, const mapped_type> const_iterator;
+			typedef constMapIterator<key_type, mapped_type> const_iterator;
             typedef size_t size_type;
             typedef std::ptrdiff_t difference_type;
             typedef Node<key_type, mapped_type> node_type;
@@ -62,27 +62,6 @@ namespace ft
                         curr_node->setRight(n);
                 }
                 n->setParent(curr_node);
-            }
-
-            node_type *search_by_key(const key_type &k)
-            {
-                node_type *tmp = root;
-                while (tmp)
-                {
-                    if (tmp->getPair().first == k)
-                        return (tmp);
-                    else if (k < tmp->getPair().first)
-                    {
-                        tmp = tmp->getLeft();
-                        continue;
-                    }
-                    else if (k > tmp->getPair().first)
-                    {
-                        tmp = tmp->getRight();
-                        continue;
-                    }
-                }
-                return (NULL);
             }
 
             node_type *search_by_key(const key_type &k) const
@@ -173,7 +152,6 @@ namespace ft
                 _compare = x._compare;
                 _allocator = x._allocator;
                 root = recursive_copy(x.root, this->root);
-
             }
 
             map &operator=(const map &x)
@@ -192,9 +170,22 @@ namespace ft
                 return (iterator(tmp));
             }
 
+            const_iterator begin() const
+            {
+                node_type *tmp = root;
+                while (tmp->getLeft())
+                    tmp = tmp->getLeft();
+                return (const_iterator(tmp));
+            }
+
             iterator end()
             {
                 return (iterator(root->getParent()));
+            }
+
+            const_iterator end() const
+            {
+                return (const_iterator(root->getParent()));
             }
 
             //Capacity
@@ -416,9 +407,7 @@ namespace ft
     bool operator== (map<Key, T, Compare> &lhs, map<Key, T, Compare> &rhs)
     {
         if (lhs.size() != rhs.size())
-        {
             return (false);
-        }
         if (lhs.size() > 0)
         {
             typedef typename map<Key, T, Compare>::iterator iterator;
@@ -426,9 +415,7 @@ namespace ft
             for (iterator lhs_begin = lhs.begin(); lhs_begin != lhs.end(); lhs_begin++)
             {
                 if (lhs_begin->first != rhs_begin->first || lhs_begin->second != rhs_begin->second)
-                {
                     return (false);
-                }
                 rhs_begin++;
             }
         }
@@ -445,17 +432,13 @@ namespace ft
     bool operator< (map<Key, T, Compare> &lhs, map<Key, T, Compare> &rhs)
     {
         if (rhs.empty() || lhs.empty())
-        {
             return (lhs.size() < rhs.size());
-        }
         typedef typename map<Key, T, Compare>::iterator iterator;
         iterator rhs_begin = rhs.begin();
         for (iterator lhs_begin = lhs.begin(); lhs_begin != lhs.end(); lhs_begin++)
         {
             if (lhs_begin->first != rhs_begin->first || lhs_begin->second != rhs_begin->second)
-            {
                 return (*lhs_begin < *rhs_begin);
-            }
             rhs_begin++;
         }
         return (lhs.size() < rhs.size());
