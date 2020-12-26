@@ -85,9 +85,6 @@
 		<Unit filename="/mnt/c/Users/m4xdo/OneDrive/Bureau/ft_containers/Map/MapIterator.hpp">
 			<Option target="ft_containers"/>
 		</Unit>
-		<Unit filename="/mnt/c/Users/m4xdo/OneDrive/Bureau/ft_containers/Map/MapRemake.hpp">
-			<Option target="ft_containers"/>
-		</Unit>
 		<Unit filename="/mnt/c/Users/m4xdo/OneDrive/Bureau/ft_containers/Map/main.cpp">
 			<Option target="ft_containers"/>
 		</Unit>

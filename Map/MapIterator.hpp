@@ -98,8 +98,10 @@ namespace ft
             mapIterator(const mapIterator &i) { this->_M_node = i._M_node; }
 
             mapIterator(const constMapIterator<Key, T> &x) { this->_M_node = x._M_node; }
-            operator constMapIterator<Key, T>() { return (ConstIterator(this->_M_node)); }
+            operator constMapIterator<Key, T>() { return (constMapIterator<Key, T>(this->_M_node)); }
             mapIterator &operator=(const constMapIterator<Key, T> &x) { this->_M_node = x._M_node; return (*this); }
+
+
             mapIterator& operator=(const mapIterator &copy) { this->_M_node = copy._M_node; return *this; }
 
             mapIterator& operator++()
@@ -257,6 +259,9 @@ namespace ft
     };
 
     template<class Key, class T>
+    class constReverseMapIterator;
+
+    template<class Key, class T>
     class reverseMapIterator
     {
         public:
@@ -270,9 +275,9 @@ namespace ft
             reverseMapIterator(node_type *n) : _M_node(n) {}
             reverseMapIterator(const reverseMapIterator &i) { this->_M_node = i._M_node; }
 
-//            reverseMapIterator(const constMapIterator<Key, T> &x) { this->_M_node = x._M_node; }
-//            operator constMapIterator<Key, T>() { return (ConstIterator(this->_M_node)); }
-//            mapIterator &operator=(const constMapIterator<Key, T> &x) { this->_M_node = x._M_node; return (*this); }
+            reverseMapIterator(const constReverseMapIterator<Key, T> &x) { this->_M_node = x._M_node; }
+            operator constReverseMapIterator<Key, T>() { return (constReverseMapIterator<Key, T>(this->_M_node)); }
+            reverseMapIterator& operator=(const constReverseMapIterator<Key, T> &x) { this->_M_node = x._M_node; return (*this); }
             reverseMapIterator& operator=(const reverseMapIterator &copy) { this->_M_node = copy._M_node; return *this; }
 
             reverseMapIterator& operator--()
@@ -305,9 +310,6 @@ namespace ft
 
             reverseMapIterator& operator++()
             {
-
-                if ()
-
                 if (_M_node->getLeft())
                 {
                     _M_node = _M_node->getLeft();
@@ -343,6 +345,92 @@ namespace ft
             bool operator>(const reverseMapIterator &rhs) const { return _M_node > rhs._M_node; }
             bool operator<=(const reverseMapIterator &rhs) const { return _M_node >= rhs._M_node; }
             bool operator>=(const reverseMapIterator &rhs) const { return _M_node <= rhs._M_node; }
+    };
+
+    template<class Key, class T>
+    class constReverseMapIterator
+    {
+        public:
+            typedef Node<Key, T> node_type;
+            typedef std::pair<const Key, T> value_type;
+
+            node_type *_M_node;
+
+        public:
+            constReverseMapIterator() : _M_node() {}
+            constReverseMapIterator(node_type *n) : _M_node(n) {}
+            constReverseMapIterator(const constReverseMapIterator &i) { this->_M_node = i._M_node; }
+
+            constReverseMapIterator(const reverseMapIterator<Key, T> &x) { this->_M_node = x._M_node; }
+            operator reverseMapIterator<Key, T>() { return (reverseMapIterator<Key, T>(this->_M_node)); }
+            constReverseMapIterator &operator=(const reverseMapIterator<Key, T> &x) { this->_M_node = x._M_node; return (*this); }
+            constReverseMapIterator& operator=(const constReverseMapIterator &copy) { this->_M_node = copy._M_node; return *this; }
+
+            constReverseMapIterator& operator--()
+            {
+                if (_M_node->getRight())
+                {
+                    _M_node = _M_node->getRight();
+                    while (_M_node->getLeft())
+                        _M_node = _M_node->getLeft();
+                }
+                else
+                {
+                    node_type *tmp;
+                    do
+                    {
+                        tmp = _M_node;
+                        _M_node = _M_node->getParent();
+                    }
+                    while (_M_node && tmp == _M_node->getRight());
+                }
+                return (*this);
+            }
+
+            constReverseMapIterator operator--(int)
+            {
+                mapIterator<Key, T>tmp = *this;
+                operator--();
+                return (tmp);
+            }
+
+            constReverseMapIterator& operator++()
+            {
+                if (_M_node->getLeft())
+                {
+                    _M_node = _M_node->getLeft();
+                    while (_M_node && _M_node->getRight())
+                        _M_node = _M_node->getRight();
+                }
+                else
+                {
+                    node_type *tmp;
+                    do
+                    {
+                        tmp = _M_node;
+                        _M_node = _M_node->getParent();
+                    }
+                    while (_M_node && tmp == _M_node->getLeft());
+                }
+                return (*this);
+            }
+
+            constReverseMapIterator operator++(int)
+            {
+                constReverseMapIterator<Key, T>tmp = *this;
+                operator++();
+                return (tmp);
+            }
+
+            const value_type operator*() { return (_M_node->getPair()); }
+            const value_type* operator->() { return (&_M_node->getPair()); }
+
+            bool operator!=(constReverseMapIterator<Key, T> const &rhs) { return (this->_M_node != rhs._M_node); }
+            bool operator==(constReverseMapIterator<Key, T> const &rhs) { return (this->_M_node == rhs._M_node); }
+            bool operator<(const constReverseMapIterator &rhs) const { return _M_node < rhs._M_node; }
+            bool operator>(const constReverseMapIterator &rhs) const { return _M_node > rhs._M_node; }
+            bool operator<=(const constReverseMapIterator &rhs) const { return _M_node >= rhs._M_node; }
+            bool operator>=(const constReverseMapIterator &rhs) const { return _M_node <= rhs._M_node; }
     };
 }
 
