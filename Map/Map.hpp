@@ -15,6 +15,7 @@ namespace ft
             typedef T mapped_type;
             typedef std::pair<const key_type, mapped_type> value_type;
             typedef Compare key_compare;
+            typedef Compare value_compare;
             typedef Alloc allocator_type;
 
             typedef value_type& reference;
@@ -370,7 +371,10 @@ namespace ft
                 return (key_compare());
             }
 
-            //value_comp()
+            value_compare value_comp() const
+            {
+                return (key_compare());
+            }
 
             //Operations
             iterator find(const key_type &k)
