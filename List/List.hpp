@@ -193,7 +193,7 @@ namespace ft
 
 			size_type max_size() const
 			{
-                return std::numeric_limits<std::size_t>::max() / (sizeof(ft::list<value_type>) - sizeof(pointer));
+                return _allocator.max_size();
 			}
 
 			//Element access
@@ -357,6 +357,7 @@ namespace ft
             {
                 swap(_list, x._list);
                 swap(this->_length, x._length);
+                swap(this->_allocator, x._allocator);
             }
 
             void resize(size_type n, value_type val = value_type())
@@ -528,16 +529,14 @@ namespace ft
     template<class T>
     bool operator==(list<T> &lhs, list<T> &rhs)
     {
-        if (lhs.size() != rhs.size())
-            return (false);
         typename list<T>::iterator begin_lhs = lhs.begin();
         typename list<T>::iterator begin_rhs = rhs.begin();
+        if (lhs.size() != rhs.size())
+            return (false);
         while (begin_lhs != lhs.end() && begin_rhs != rhs.end())
         {
-            if (*begin_lhs != *begin_rhs)
+            if (*begin_lhs++ != *begin_rhs++)
                 return (false);
-            begin_lhs++;
-            begin_rhs++;
         }
         return (true);
     }
@@ -584,6 +583,12 @@ namespace ft
     bool operator>=(list<T> &lhs, list<T> &rhs)
     {
         return (!(lhs < rhs));
+    }
+
+    template <class T, class Alloc>
+    void swap (list<T,Alloc>& x, list<T,Alloc>& y)
+    {
+        x.swap(y);
     }
 }
 

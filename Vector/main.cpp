@@ -6,19 +6,33 @@ int main()
 {
     std::cout << "\033[1;32mft::vector\033[0m\n";
     {
-        int myints[] = {16,2,77,29};
-        ft::vector<int> fifth (myints, myints + sizeof(myints) / sizeof(int) );
-        std::cout << *fifth.begin() << std::endl;
+        ft::vector<int> vector;
+        ft::vector<int>::iterator it;
+        ft::vector<int>::iterator ite;
 
-        ft::vector<int>::const_iterator it;
+//        std::cout << (it - ite) << std::endl;
+        vector.push_back(15);
 
-        it = fifth.begin();
 
     }
     std::cout << "\033[1;32mstd::vector\033[0m\n";
     {
-        int myints[] = {16,2,77,29};
-        std::vector<int> fifth (myints, myints + sizeof(myints) / sizeof(int) );
-        std::cout << *fifth.begin() << std::endl;
+        std::vector<int> vector;
+        std::vector<int>::iterator it;
+        std::vector<int>::iterator ite;
+
+
+        vector.push_back(15);
+//        vector.push_back(15);
+//        vector.push_back(15);
+//        vector.push_back(15);
+//
+//        it = vector.begin();
+        std::cout << vector.front() << std::endl;
+
+//        vector.at(3) = 12;
+
+
+
     }
 }

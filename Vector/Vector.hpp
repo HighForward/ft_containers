@@ -43,10 +43,16 @@ namespace ft
                     }
             };
 
+            class length_error : public std::exception
+            {
+                    virtual const char* what() const throw()
+                    {
+                        return ("length_error");
+                    }
+            };
+
             size_type get_new_capacity(size_type requested_capacity)
             {
-                if ((int)requested_capacity < 0)
-                    return (0);
                 size_type new_cap = 0;
                 size_type power = 0;
                 while (new_cap < requested_capacity)
@@ -105,9 +111,9 @@ namespace ft
                 return (*this);
             }
 
-            iterator begin() { return (iterator(&at(0))); }
+            iterator begin() { return (iterator(&_c[0])); }
             iterator end() { return (iterator(&_c[_length])); }
-            const_iterator begin() const { return (const_iterator(&at(0))); }
+            const_iterator begin() const { return (const_iterator(&_c[0])); }
             const_iterator end() const { return (const_iterator(&_c[_length])); }
             reverse_iterator rbegin() { return (reverse_iterator(&_c[_length - 1])); }
             reverse_iterator rend() { return (reverse_iterator(&_c[0 - 1])); }
@@ -128,6 +134,9 @@ namespace ft
 
             void resize(size_type n, value_type val = value_type())
             {
+                if ((int)n < 0 || n > max_size())
+                    throw length_error();
+
                 if (n > size())
                 {
                     if (n > capacity())
@@ -150,6 +159,8 @@ namespace ft
 
             void reserve(size_type n)
             {
+                if ((int)n < 0 || n > max_size())
+                    throw length_error();
                 if (n > capacity())
                 {
                     T* new_c;
@@ -178,11 +189,15 @@ namespace ft
 
             reference at(size_type n)
             {
+                if ((int)n < 0 || n >= _length)
+                    throw out_of_range();
                 return (_c[n]);
             }
 
             const_reference at(size_type n) const
             {
+                if ((int)n < 0 || n >= _length)
+                    throw out_of_range();
                 return (_c[n]);
             }
 
@@ -371,6 +386,12 @@ namespace ft
     bool operator>=(const vector<T> &lhs, const vector<T> &rhs)
     {
         return (!(lhs < rhs));
+    }
+
+    template <class T, class Alloc>
+    void swap (vector<T,Alloc>& x, vector<T,Alloc>& y)
+    {
+        x.swap(y);
     }
 }
 

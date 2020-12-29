@@ -6,37 +6,14 @@ int main()
 
 	std::cout << "\033[1;32m-- ft::list --\033[0m\n";
     {
-//        exec_test_list<ft::list<int> >();
         ft::list<int> list;
-        ft::list<int> tsil;
-
-        ft::list<int>::reverse_iterator rit;
-        ft::list<int>::reverse_iterator rite;
-
-        list = tsil;
-
-        list.push_back(15);
-        list.push_back(16);
-        list.push_back(17);
+        ft::list<int> list2;
 
 
-
-        rit = list.rbegin();
-        rite = list.rend();
-        while (rit != rite)
-        {
-            std::cout << *rit << std::endl;
-            rit++;
-        }
-
-        ft::list<int>::const_reverse_iterator crit;
-        rit = crit;
-
-        crit = list.rbegin();
-
-//        rit.operator*() = 15;
-
-
+//        list.push_front(15);
+//        list.push_front(15);
+//        list.push_front(15);
+        list.resize(0);
 
 
     }
@@ -44,22 +21,7 @@ int main()
 	{
         std::list<int> list;
 
-        std::list<int>::reverse_iterator rit;
-        std::list<int>::reverse_iterator rite;
-
-//        list.push_back(15);
-//        list.push_back(16);
-//        list.push_back(17);
-//
-
-        rit = list.rbegin();
-        rite = list.rend();
-        while (rit != rite)
-        {
-            std::cout << *rit << std::endl;
-            rit++;
-        }
-
+        list.resize(0);
 
 
     }

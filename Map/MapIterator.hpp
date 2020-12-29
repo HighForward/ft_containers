@@ -101,7 +101,6 @@ namespace ft
             operator constMapIterator<Key, T>() { return (constMapIterator<Key, T>(this->_M_node)); }
             mapIterator &operator=(const constMapIterator<Key, T> &x) { this->_M_node = x._M_node; return (*this); }
 
-
             mapIterator& operator=(const mapIterator &copy) { this->_M_node = copy._M_node; return *this; }
 
             mapIterator& operator++()
