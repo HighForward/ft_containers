@@ -7,7 +7,7 @@
 
 namespace ft
 {
-    template<class Key, class T, class Compare = std::less<Key>, class Alloc = std::allocator<std::pair<const Key, T> > >
+    template<class Key, class T, class Compare = std::less<Key>, class Alloc = std::allocator<ft::Node<Key, T> > >
     class map
     {
         public:
@@ -96,7 +96,8 @@ namespace ft
                 }
                 this->recursive_free(node->getLeft());
                 this->recursive_free(node->getRight());
-                delete node;
+                _allocator.destroy(node);
+                _allocator.deallocate(node, 1);
                 node = NULL;
             }
 
@@ -111,7 +112,8 @@ namespace ft
             node_type* recursive_copy(node_type *node, node_type *dad)
             {
                 if (node == NULL) return NULL;
-                node_type* newNode = new node_type(node->getPair());
+                node_type *newNode = _allocator.allocate(1);
+                _allocator.construct(newNode, node_type(node->getPair()));
 
                 if (this->root == NULL)
                     newNode->setParent(NULL);
@@ -260,7 +262,10 @@ namespace ft
             {
                 if (search_by_key(val.first))
                     return (std::pair<iterator, bool>(iterator(search_by_key(val.first)), false));
-                Node<key_type, mapped_type> *new_node = new node_type(val);
+
+                node_type *new_node = _allocator.allocate(1);
+                _allocator.construct(new_node, node_type(val));
+
                 recursive_insert(root, new_node);
                 _size++;
                 return (std::pair<iterator, bool>(iterator(search_by_key(val.first)), true));
@@ -287,7 +292,8 @@ namespace ft
                     return ;
                 else if (_size == 1 && position == iterator(root))
                 {
-                    delete (n);
+                    _allocator.destroy(n);
+                    _allocator.deallocate(n, 1);
                     _size--;
                     root = NULL;
                 }
@@ -299,7 +305,8 @@ namespace ft
                     else
                         p->setLeft(NULL);
                     _size--;
-                    delete (n);
+                    _allocator.destroy(n);
+                    _allocator.deallocate(n, 1);
                 }
                 else if ((n->getRight() == NULL && n->getLeft() != NULL) || (n->getRight() != NULL && n->getLeft() == NULL))
                 {
@@ -323,7 +330,8 @@ namespace ft
                         root->setParent(NULL);
                     }
                     _size--;
-                    delete (n);
+                    _allocator.destroy(n);
+                    _allocator.deallocate(n, 1);
                 }
                 else if (n->getLeft() && n->getRight())
                 {

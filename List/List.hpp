@@ -9,7 +9,7 @@
 
 namespace ft
 {
-	template<class T, class Alloc = std::allocator<T> >
+	template<class T, class Alloc = std::allocator<NodeList<T> > >
 	class list
 	{
 		public:
@@ -56,7 +56,8 @@ namespace ft
 
 			void init()
 			{
-				_list.past_end = new NodeList<T>;
+				_list.past_end = _allocator.allocate(1);
+				_allocator.construct(_list.past_end, ft::NodeList<T>());
 				_list.last = _list.past_end;
 				_list.first = _list.past_end;
 				init_past_end();
@@ -113,10 +114,13 @@ namespace ft
 				while (remove != end()._M_node)
 				{
 					tmp = remove->next;
-					delete remove;
-					remove = tmp;
+                    _allocator.destroy(remove);
+                    _allocator.deallocate(remove, 1);
+
+                    remove = tmp;
 				}
-				delete _list.past_end;
+                _allocator.destroy(_list.past_end);
+                _allocator.deallocate(_list.past_end, 1);
 			}
 
 			list<T>& operator=(const list<T>& rhs)
@@ -236,7 +240,9 @@ namespace ft
 
 			void push_back(const value_type &val)
 			{
-				NodeList<T> *node = new NodeList<T>(val);
+                NodeList<T> *node = _allocator.allocate(1);
+                _allocator.construct(node, ft::NodeList<T>(val));
+
 				node->next = _list.past_end;
 				node->prev = _list.last;
 
@@ -251,7 +257,10 @@ namespace ft
 
 			void push_front(const value_type &val)
 			{
-				NodeList<T> *node = new NodeList<T>(val);
+
+                NodeList<T> *node = _allocator.allocate(1);
+                _allocator.construct(node, ft::NodeList<T>(val));
+
 				node->next = _list.first;
 				node->prev = _list.past_end;
 
@@ -267,7 +276,10 @@ namespace ft
 			void pop_back()
 			{
 				NodeList<T> *tmp = _list.last->prev;
-				delete _list.last;
+
+                _allocator.destroy(_list.last);
+                _allocator.deallocate(_list.last, 1);
+
 				_list.last = tmp;
                 init_past_end();
 
@@ -277,10 +289,12 @@ namespace ft
 			void pop_front()
 			{
 				NodeList<T> *tmp = _list.first->next;
-				delete _list.first;
+
+                _allocator.destroy(_list.first);
+                _allocator.deallocate(_list.first, 1);
+
 				_list.first = tmp;
                 init_past_end();
-
                 _length--;
 			}
 
@@ -298,7 +312,8 @@ namespace ft
 				}
 				else
 				{
-					NodeList<T> *node = new NodeList<T>(val);
+                    NodeList<T> *node = _allocator.allocate(1);
+                    _allocator.construct(node, ft::NodeList<T>(val));
 					node->prev = position._M_node->prev;
 					node->next = position._M_node;
 					position._M_node->prev->next = node;
@@ -340,7 +355,10 @@ namespace ft
                     NodeList<T> *tmp = position._M_node->prev;
                     tmp->next = position._M_node->next;
 					position._M_node->next->prev = tmp;
-					delete position._M_node;
+
+                    _allocator.destroy(position._M_node);
+                    _allocator.deallocate(position._M_node, 1);
+
 					_length--;
 					return (iterator(tmp->next));
 				}

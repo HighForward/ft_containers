@@ -10,10 +10,15 @@ int main()
         ft::list<int> list2;
 
 
-//        list.push_front(15);
-//        list.push_front(15);
-//        list.push_front(15);
-        list.resize(0);
+        list.push_front(15);
+        list.push_front(15);
+        list.push_front(15);
+//        list.resize(0);
+
+        for (ft::list<int>::iterator it = list.begin(); it != list.end(); it++)
+        {
+            std::cout << *it << std::endl;
+        }
 
 
     }
